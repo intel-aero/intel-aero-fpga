@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="simulation/submodules/altera_modular_adc_sequencer.v"
+   type="VERILOG"
+   library="sequencer_internal" />
+ <file
+   path="simulation/submodules/altera_modular_adc_sequencer_csr.v"
+   type="VERILOG"
+   library="sequencer_internal" />
+ <file
+   path="simulation/submodules/altera_modular_adc_sequencer_ctrl.v"
+   type="VERILOG"
+   library="sequencer_internal" />
+ <file
+   path="simulation/submodules/altera_modular_adc_control.v"
+   type="VERILOG"
+   library="control_internal" />
+ <file
+   path="simulation/submodules/altera_modular_adc_control_avrg_fifo.v"
+   type="VERILOG"
+   library="control_internal" />
+ <file
+   path="simulation/submodules/altera_modular_adc_control_fsm.v"
+   type="VERILOG"
+   library="control_internal" />
+ <file
+   path="simulation/submodules/chsel_code_converter_sw_to_hw.v"
+   type="VERILOG"
+   library="control_internal" />
+ <file
+   path="simulation/submodules/fiftyfivenm_adcblock_primitive_wrapper.v"
+   type="VERILOG"
+   library="control_internal" />
+ <file
+   path="simulation/submodules/fiftyfivenm_adcblock_top_wrapper.v"
+   type="VERILOG"
+   library="control_internal" />
+ <file
+   path="simulation/submodules/altera_reset_controller.v"
+   type="VERILOG"
+   library="rst_controller" />
+ <file
+   path="simulation/submodules/altera_reset_synchronizer.v"
+   type="VERILOG"
+   library="rst_controller" />
+ <file
+   path="simulation/submodules/altera_reset_controller.sdc"
+   type="SDC"
+   library="rst_controller" />
+ <file path="simulation/submodules/adc_adc.v" type="VERILOG" library="adc" />
+ <file path="simulation/adc.v" type="VERILOG" />
+ <topLevel name="adc" />
+ <deviceFamily name="max10" />
+</simPackage>

@@ -1,0 +1,140 @@
+Flow report for top
+Tue Jan 17 14:43:20 2017
+Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+  8. Flow Messages
+  9. Flow Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2016  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++----------------------------------------------------------------------------------+
+; Flow Summary                                                                     ;
++------------------------------------+---------------------------------------------+
+; Flow Status                        ; Successful - Tue Jan 17 14:43:16 2017       ;
+; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
+; Revision Name                      ; top                                         ;
+; Top-level Entity Name              ; top                                         ;
+; Family                             ; MAX 10                                      ;
+; Device                             ; 10M08SAM153I7G                              ;
+; Timing Models                      ; Final                                       ;
+; Total logic elements               ; 2,232 / 8,064 ( 28 % )                      ;
+;     Total combinational functions  ; 1,954 / 8,064 ( 24 % )                      ;
+;     Dedicated logic registers      ; 1,297 / 8,064 ( 16 % )                      ;
+; Total registers                    ; 1297                                        ;
+; Total pins                         ; 29 / 112 ( 26 % )                           ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0 / 387,072 ( 0 % )                         ;
+; Embedded Multiplier 9-bit elements ; 0 / 48 ( 0 % )                              ;
+; Total PLLs                         ; 1 / 1 ( 100 % )                             ;
+; UFM blocks                         ; 0 / 1 ( 0 % )                               ;
+; ADC blocks                         ; 1 / 1 ( 100 % )                             ;
++------------------------------------+---------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 01/17/2017 14:42:44 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; top                 ;
++-------------------+---------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                       ;
++-------------------------------------+-------------------------------------------------------+---------------+-------------+------------+
+; Assignment Name                     ; Value                                                 ; Default Value ; Entity Name ; Section Id ;
++-------------------------------------+-------------------------------------------------------+---------------+-------------+------------+
+; COMPILER_SIGNATURE_ID               ; 93047522948832.148469296408432                        ; --            ; --          ; --         ;
+; FLOW_ENABLE_POWER_ANALYZER          ; On                                                    ; Off           ; --          ; --         ;
+; MAX_CORE_JUNCTION_TEMP              ; 100                                                   ; --            ; --          ; --         ;
+; MIN_CORE_JUNCTION_TEMP              ; -40                                                   ; --            ; --          ; --         ;
+; MISC_FILE                           ; adc/synthesis/../adc.cmp                              ; --            ; --          ; --         ;
+; MISC_FILE                           ; adc/synthesis/../../adc.qsys                          ; --            ; --          ; --         ;
+; MISC_FILE                           ; ip/pll/pll_inst.v                                     ; --            ; --          ; --         ;
+; MISC_FILE                           ; ip/pll/pll_bb.v                                       ; --            ; --          ; --         ;
+; MISC_FILE                           ; ip/pll/pll.ppf                                        ; --            ; --          ; --         ;
+; MISC_FILE                           ; ip/mult/mult_inst.v                                   ; --            ; --          ; --         ;
+; MISC_FILE                           ; ip/mult/mult_bb.v                                     ; --            ; --          ; --         ;
+; PARTITION_COLOR                     ; -- (Not supported for targeted family)                ; --            ; --          ; Top        ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family)                ; --            ; --          ; Top        ;
+; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family)                ; --            ; --          ; Top        ;
+; PROJECT_OUTPUT_DIRECTORY            ; output_files                                          ; --            ; --          ; --         ;
+; SLD_FILE                            ; adc/synthesis/adc.debuginfo                           ; --            ; --          ; --         ;
+; SLD_INFO                            ; QSYS_NAME adc HAS_SOPCINFO 1 GENERATION_ID 1481745288 ; --            ; adc         ; --         ;
+; SOPCINFO_FILE                       ; adc/synthesis/../../adc.sopcinfo                      ; --            ; --          ; --         ;
+; SYNTHESIS_ONLY_QIP                  ; On                                                    ; --            ; --          ; --         ;
++-------------------------------------+-------------------------------------------------------+---------------+-------------+------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:00:15     ; 1.0                     ; 681 MB              ; 00:00:28                           ;
+; Fitter                    ; 00:00:10     ; 1.5                     ; 1464 MB             ; 00:00:17                           ;
+; Assembler                 ; 00:00:01     ; 1.0                     ; 571 MB              ; 00:00:01                           ;
+; PowerPlay Power Analyzer  ; 00:00:03     ; 1.8                     ; 710 MB              ; 00:00:05                           ;
+; TimeQuest Timing Analyzer ; 00:00:03     ; 1.9                     ; 682 MB              ; 00:00:06                           ;
+; Total                     ; 00:00:32     ; --                      ; --                  ; 00:00:57                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++-----------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                         ;
++---------------------------+------------------+------------+------------+----------------+
+; Module Name               ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
++---------------------------+------------------+------------+------------+----------------+
+; Analysis & Synthesis      ; G771-591         ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter                    ; G771-591         ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler                 ; G771-591         ; Windows 10 ; 10.0       ; x86_64         ;
+; PowerPlay Power Analyzer  ; G771-591         ; Windows 10 ; 10.0       ; x86_64         ;
+; TimeQuest Timing Analyzer ; G771-591         ; Windows 10 ; 10.0       ; x86_64         ;
++---------------------------+------------------+------------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off top -c top
+quartus_fit --read_settings_files=off --write_settings_files=off top -c top
+quartus_asm --read_settings_files=off --write_settings_files=off top -c top
+quartus_pow --read_settings_files=off --write_settings_files=off top -c top
+quartus_sta top -c top
+
+
+

@@ -1,0 +1,33 @@
+# system info adc on 2016.10.07.09:15:05
+system_info:
+name,value
+DEVICE,10M08SAU169C8GES
+DEVICE_FAMILY,MAX 10
+GENERATION_ID,1475856905
+#
+#
+# Files generated for adc on 2016.10.07.09:15:05
+files:
+filepath,kind,attributes,module,is_top
+simulation/adc.v,VERILOG,,adc,true
+simulation/submodules/adc_adc.v,VERILOG,,adc_adc,false
+simulation/submodules/altera_reset_controller.v,VERILOG,,altera_reset_controller,false
+simulation/submodules/altera_reset_synchronizer.v,VERILOG,,altera_reset_controller,false
+simulation/submodules/altera_reset_controller.sdc,SDC,,altera_reset_controller,false
+simulation/submodules/altera_modular_adc_control.v,VERILOG,,altera_modular_adc_control,false
+simulation/submodules/altera_modular_adc_control_avrg_fifo.v,VERILOG,,altera_modular_adc_control,false
+simulation/submodules/altera_modular_adc_control_fsm.v,VERILOG,,altera_modular_adc_control,false
+simulation/submodules/chsel_code_converter_sw_to_hw.v,VERILOG,,altera_modular_adc_control,false
+simulation/submodules/fiftyfivenm_adcblock_primitive_wrapper.v,VERILOG,,altera_modular_adc_control,false
+simulation/submodules/fiftyfivenm_adcblock_top_wrapper.v,VERILOG,,altera_modular_adc_control,false
+simulation/submodules/altera_modular_adc_sequencer.v,VERILOG,,altera_modular_adc_sequencer,false
+simulation/submodules/altera_modular_adc_sequencer_csr.v,VERILOG,,altera_modular_adc_sequencer,false
+simulation/submodules/altera_modular_adc_sequencer_ctrl.v,VERILOG,,altera_modular_adc_sequencer,false
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+adc.adc,adc_adc
+adc.adc.control_internal,altera_modular_adc_control
+adc.adc.sequencer_internal,altera_modular_adc_sequencer
+adc.rst_controller,altera_reset_controller
