@@ -1,0 +1,168 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2016  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 496 328)
+	(text "adc" (rect 238 -1 252 11)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 312 20 324)(font "Arial" ))
+	(port
+		(pt 0 72)
+		(input)
+		(text "adc_adc_pll_clock_clk" (rect 0 0 89 12)(font "Arial" (font_size 8)))
+		(text "adc_adc_pll_clock_clk" (rect 4 61 130 72)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 192 72)(line_width 1))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "adc_adc_pll_locked_export" (rect 0 0 108 12)(font "Arial" (font_size 8)))
+		(text "adc_adc_pll_locked_export" (rect 4 101 154 112)(font "Arial" (font_size 8)))
+		(line (pt 0 112)(pt 192 112)(line_width 1))
+	)
+	(port
+		(pt 0 152)
+		(input)
+		(text "adc_sequencer_csr_address" (rect 0 0 118 12)(font "Arial" (font_size 8)))
+		(text "adc_sequencer_csr_address" (rect 4 141 154 152)(font "Arial" (font_size 8)))
+		(line (pt 0 152)(pt 192 152)(line_width 1))
+	)
+	(port
+		(pt 0 168)
+		(input)
+		(text "adc_sequencer_csr_read" (rect 0 0 103 12)(font "Arial" (font_size 8)))
+		(text "adc_sequencer_csr_read" (rect 4 157 136 168)(font "Arial" (font_size 8)))
+		(line (pt 0 168)(pt 192 168)(line_width 1))
+	)
+	(port
+		(pt 0 184)
+		(input)
+		(text "adc_sequencer_csr_write" (rect 0 0 103 12)(font "Arial" (font_size 8)))
+		(text "adc_sequencer_csr_write" (rect 4 173 142 184)(font "Arial" (font_size 8)))
+		(line (pt 0 184)(pt 192 184)(line_width 1))
+	)
+	(port
+		(pt 0 200)
+		(input)
+		(text "adc_sequencer_csr_writedata[31..0]" (rect 0 0 143 12)(font "Arial" (font_size 8)))
+		(text "adc_sequencer_csr_writedata[31..0]" (rect 4 189 208 200)(font "Arial" (font_size 8)))
+		(line (pt 0 200)(pt 192 200)(line_width 3))
+	)
+	(port
+		(pt 0 256)
+		(input)
+		(text "clk_clk" (rect 0 0 27 12)(font "Arial" (font_size 8)))
+		(text "clk_clk" (rect 4 245 46 256)(font "Arial" (font_size 8)))
+		(line (pt 0 256)(pt 192 256)(line_width 1))
+	)
+	(port
+		(pt 0 296)
+		(input)
+		(text "reset_reset_n" (rect 0 0 56 12)(font "Arial" (font_size 8)))
+		(text "reset_reset_n" (rect 4 285 82 296)(font "Arial" (font_size 8)))
+		(line (pt 0 296)(pt 192 296)(line_width 1))
+	)
+	(port
+		(pt 496 72)
+		(output)
+		(text "adc_response_valid" (rect 0 0 80 12)(font "Arial" (font_size 8)))
+		(text "adc_response_valid" (rect 394 61 502 72)(font "Arial" (font_size 8)))
+		(line (pt 496 72)(pt 304 72)(line_width 1))
+	)
+	(port
+		(pt 496 88)
+		(output)
+		(text "adc_response_channel[4..0]" (rect 0 0 113 12)(font "Arial" (font_size 8)))
+		(text "adc_response_channel[4..0]" (rect 354 77 510 88)(font "Arial" (font_size 8)))
+		(line (pt 496 88)(pt 304 88)(line_width 3))
+	)
+	(port
+		(pt 496 104)
+		(output)
+		(text "adc_response_data[11..0]" (rect 0 0 101 12)(font "Arial" (font_size 8)))
+		(text "adc_response_data[11..0]" (rect 369 93 513 104)(font "Arial" (font_size 8)))
+		(line (pt 496 104)(pt 304 104)(line_width 3))
+	)
+	(port
+		(pt 496 120)
+		(output)
+		(text "adc_response_startofpacket" (rect 0 0 114 12)(font "Arial" (font_size 8)))
+		(text "adc_response_startofpacket" (rect 351 109 507 120)(font "Arial" (font_size 8)))
+		(line (pt 496 120)(pt 304 120)(line_width 1))
+	)
+	(port
+		(pt 496 136)
+		(output)
+		(text "adc_response_endofpacket" (rect 0 0 110 12)(font "Arial" (font_size 8)))
+		(text "adc_response_endofpacket" (rect 355 125 499 136)(font "Arial" (font_size 8)))
+		(line (pt 496 136)(pt 304 136)(line_width 1))
+	)
+	(port
+		(pt 0 216)
+		(output)
+		(text "adc_sequencer_csr_readdata[31..0]" (rect 0 0 143 12)(font "Arial" (font_size 8)))
+		(text "adc_sequencer_csr_readdata[31..0]" (rect 4 205 202 216)(font "Arial" (font_size 8)))
+		(line (pt 0 216)(pt 192 216)(line_width 3))
+	)
+	(drawing
+		(text "adc_adc_pll_clock" (rect 87 43 276 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 197 67 412 144)(font "Arial" (color 0 0 0)))
+		(text "adc_adc_pll_locked" (rect 79 83 266 179)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "export" (rect 197 107 430 224)(font "Arial" (color 0 0 0)))
+		(text "adc_response" (rect 305 43 682 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "valid" (rect 281 67 592 144)(font "Arial" (color 0 0 0)))
+		(text "channel" (rect 269 83 580 176)(font "Arial" (color 0 0 0)))
+		(text "data" (rect 283 99 590 208)(font "Arial" (color 0 0 0)))
+		(text "startofpacket" (rect 244 115 566 240)(font "Arial" (color 0 0 0)))
+		(text "endofpacket" (rect 249 131 564 272)(font "Arial" (color 0 0 0)))
+		(text "adc_sequencer_csr" (rect 79 123 260 259)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "address" (rect 197 147 436 304)(font "Arial" (color 0 0 0)))
+		(text "read" (rect 197 163 418 336)(font "Arial" (color 0 0 0)))
+		(text "write" (rect 197 179 424 368)(font "Arial" (color 0 0 0)))
+		(text "writedata" (rect 197 195 448 400)(font "Arial" (color 0 0 0)))
+		(text "readdata" (rect 197 211 442 432)(font "Arial" (color 0 0 0)))
+		(text "clk" (rect 177 227 372 467)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 197 251 412 512)(font "Arial" (color 0 0 0)))
+		(text "reset" (rect 163 267 356 547)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 197 291 436 592)(font "Arial" (color 0 0 0)))
+		(text " adc " (rect 478 312 986 634)(font "Arial" ))
+		(line (pt 192 32)(pt 304 32)(line_width 1))
+		(line (pt 304 32)(pt 304 312)(line_width 1))
+		(line (pt 192 312)(pt 304 312)(line_width 1))
+		(line (pt 192 32)(pt 192 312)(line_width 1))
+		(line (pt 193 52)(pt 193 76)(line_width 1))
+		(line (pt 194 52)(pt 194 76)(line_width 1))
+		(line (pt 193 92)(pt 193 116)(line_width 1))
+		(line (pt 194 92)(pt 194 116)(line_width 1))
+		(line (pt 303 52)(pt 303 140)(line_width 1))
+		(line (pt 302 52)(pt 302 140)(line_width 1))
+		(line (pt 193 132)(pt 193 220)(line_width 1))
+		(line (pt 194 132)(pt 194 220)(line_width 1))
+		(line (pt 193 236)(pt 193 260)(line_width 1))
+		(line (pt 194 236)(pt 194 260)(line_width 1))
+		(line (pt 193 276)(pt 193 300)(line_width 1))
+		(line (pt 194 276)(pt 194 300)(line_width 1))
+		(line (pt 0 0)(pt 496 0)(line_width 1))
+		(line (pt 496 0)(pt 496 328)(line_width 1))
+		(line (pt 0 328)(pt 496 328)(line_width 1))
+		(line (pt 0 0)(pt 0 328)(line_width 1))
+	)
+)

@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2016.12.13.17:01:22"
+ outputDirectory="C:/AERO/AERO_RTF_I2C_ADC/adc/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="MAX 10"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="10M08SAM153I7G"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="7"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_ADC_ADC_PLL_CLOCK_CLOCK_RATE"
+     type="Long"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_ADC_ADC_PLL_CLOCK_CLOCK_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_ADC_ADC_PLL_CLOCK_RESET_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_RATE"
+     type="Long"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_RESET_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="adc_adc_pll_clock" kind="clock" start="0">
+   <property name="clockRate" value="0" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="adc_adc_pll_clock_clk" direction="input" role="clk" width="1" />
+  </interface>
+  <interface name="adc_adc_pll_locked" kind="conduit" start="0">
+   <property name="associatedClock" value="" />
+   <property name="associatedReset" value="" />
+   <port
+       name="adc_adc_pll_locked_export"
+       direction="input"
+       role="export"
+       width="1" />
+  </interface>
+  <interface name="adc_response" kind="avalon_streaming" start="1">
+   <property name="associatedClock" value="clk" />
+   <property name="associatedReset" value="reset" />
+   <property name="beatsPerCycle" value="1" />
+   <property name="dataBitsPerSymbol" value="12" />
+   <property name="emptyWithinPacket" value="false" />
+   <property name="errorDescriptor" value="" />
+   <property name="firstSymbolInHighOrderBits" value="true" />
+   <property name="highOrderSymbolAtMSB" value="false" />
+   <property name="maxChannel" value="31" />
+   <property name="packetDescription" value="" />
+   <property name="readyLatency" value="0" />
+   <property name="symbolsPerBeat" value="1" />
+   <port name="adc_response_valid" direction="output" role="valid" width="1" />
+   <port
+       name="adc_response_channel"
+       direction="output"
+       role="channel"
+       width="5" />
+   <port name="adc_response_data" direction="output" role="data" width="12" />
+   <port
+       name="adc_response_startofpacket"
+       direction="output"
+       role="startofpacket"
+       width="1" />
+   <port
+       name="adc_response_endofpacket"
+       direction="output"
+       role="endofpacket"
+       width="1" />
+  </interface>
+  <interface name="adc_sequencer_csr" kind="avalon" start="0">
+   <property name="addressAlignment" value="DYNAMIC" />
+   <property name="addressGroup" value="0" />
+   <property name="addressSpan" value="8" />
+   <property name="addressUnits" value="WORDS" />
+   <property name="alwaysBurstMaxBurst" value="false" />
+   <property name="associatedClock" value="clk" />
+   <property name="associatedReset" value="reset" />
+   <property name="bitsPerSymbol" value="8" />
+   <property name="bridgedAddressOffset" value="0" />
+   <property name="bridgesToMaster" value="" />
+   <property name="burstOnBurstBoundariesOnly" value="false" />
+   <property name="burstcountUnits" value="WORDS" />
+   <property name="constantBurstBehavior" value="false" />
+   <property name="explicitAddressSpan" value="0" />
+   <property name="holdTime" value="0" />
+   <property name="interleaveBursts" value="false" />
+   <property name="isBigEndian" value="false" />
+   <property name="isFlash" value="false" />
+   <property name="isMemoryDevice" value="false" />
+   <property name="isNonVolatileStorage" value="false" />
+   <property name="linewrapBursts" value="false" />
+   <property name="maximumPendingReadTransactions" value="0" />
+   <property name="maximumPendingWriteTransactions" value="0" />
+   <property name="minimumUninterruptedRunLength" value="1" />
+   <property name="printableDevice" value="false" />
+   <property name="readLatency" value="1" />
+   <property name="readWaitStates" value="0" />
+   <property name="readWaitTime" value="0" />
+   <property name="registerIncomingSignals" value="false" />
+   <property name="registerOutgoingSignals" value="false" />
+   <property name="setupTime" value="0" />
+   <property name="timingUnits" value="Cycles" />
+   <property name="transparentBridge" value="false" />
+   <property name="wellBehavedWaitrequest" value="false" />
+   <property name="writeLatency" value="0" />
+   <property name="writeWaitStates" value="0" />
+   <property name="writeWaitTime" value="0" />
+   <port
+       name="adc_sequencer_csr_address"
+       direction="input"
+       role="address"
+       width="1" />
+   <port name="adc_sequencer_csr_read" direction="input" role="read" width="1" />
+   <port
+       name="adc_sequencer_csr_write"
+       direction="input"
+       role="write"
+       width="1" />
+   <port
+       name="adc_sequencer_csr_writedata"
+       direction="input"
+       role="writedata"
+       width="32" />
+   <port
+       name="adc_sequencer_csr_readdata"
+       direction="output"
+       role="readdata"
+       width="32" />
+  </interface>
+  <interface name="clk" kind="clock" start="0">
+   <property name="clockRate" value="50000000" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="clk_clk" direction="input" role="clk" width="1" />
+  </interface>
+  <interface name="reset" kind="reset" start="0">
+   <property name="associatedClock" value="" />
+   <property name="synchronousEdges" value="NONE" />
+   <port name="reset_reset_n" direction="input" role="reset_n" width="1" />
+  </interface>
+ </perimeter>
+ <entity
+   path=""
+   parameterizationKey="adc:1.0:AUTO_ADC_ADC_PLL_CLOCK_CLOCK_DOMAIN=-1,AUTO_ADC_ADC_PLL_CLOCK_CLOCK_RATE=-1,AUTO_ADC_ADC_PLL_CLOCK_RESET_DOMAIN=-1,AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=10M08SAM153I7G,AUTO_DEVICE_FAMILY=MAX 10,AUTO_DEVICE_SPEEDGRADE=7,AUTO_GENERATION_ID=1481677280,AUTO_UNIQUE_ID=(altera_modular_adc:16.1:AUTO_DEVICE_SPEEDGRADE=7,CLOCK_FREQ=50000000,CORE_VAR=2,DEVICE_PART=10M08SAM153I7G,ENABLE_DEBUG=0,FAMILY=MAX 10,MONITOR_COUNT_WIDTH=12,adc_count_on_device=1,analog_input_pin_mask=0,clkdiv=2,derived_clkdiv=2,device_adc_type=22,device_partname_fivechar_prefix=10M08,device_power_supply_type=1,en_thmax_ch0=false,en_thmax_ch1=false,en_thmax_ch10=false,en_thmax_ch11=false,en_thmax_ch12=false,en_thmax_ch13=false,en_thmax_ch14=false,en_thmax_ch15=false,en_thmax_ch16=false,en_thmax_ch2=false,en_thmax_ch3=false,en_thmax_ch4=false,en_thmax_ch5=false,en_thmax_ch6=false,en_thmax_ch7=false,en_thmax_ch8=false,en_thmax_ch9=false,en_thmin_ch0=false,en_thmin_ch1=false,en_thmin_ch10=false,en_thmin_ch11=false,en_thmin_ch12=false,en_thmin_ch13=false,en_thmin_ch14=false,en_thmin_ch15=false,en_thmin_ch16=false,en_thmin_ch2=false,en_thmin_ch3=false,en_thmin_ch4=false,en_thmin_ch5=false,en_thmin_ch6=false,en_thmin_ch7=false,en_thmin_ch8=false,en_thmin_ch9=false,en_tsd_max=false,en_tsd_min=false,enable_usr_sim=0,external_vref=2.5,hard_pwd=0,int_vref_nonvr=2.5,int_vref_vr=3.0,ip_is_for_which_adc=1,is_this_first_or_second_adc=1,max_adc_count_on_die=1,prescalar=0,prescaler_ch16=false,prescaler_ch8=false,reference_voltage=3.0,reference_voltage_sim=65536,refsel=1,sample_rate=0,seq_order_length=5,seq_order_slot_1=1,seq_order_slot_10=30,seq_order_slot_11=30,seq_order_slot_12=30,seq_order_slot_13=30,seq_order_slot_14=30,seq_order_slot_15=30,seq_order_slot_16=30,seq_order_slot_17=30,seq_order_slot_18=30,seq_order_slot_19=30,seq_order_slot_2=2,seq_order_slot_20=30,seq_order_slot_21=30,seq_order_slot_22=30,seq_order_slot_23=30,seq_order_slot_24=30,seq_order_slot_25=30,seq_order_slot_26=30,seq_order_slot_27=30,seq_order_slot_28=30,seq_order_slot_29=30,seq_order_slot_3=3,seq_order_slot_30=30,seq_order_slot_31=30,seq_order_slot_32=30,seq_order_slot_33=30,seq_order_slot_34=30,seq_order_slot_35=30,seq_order_slot_36=30,seq_order_slot_37=30,seq_order_slot_38=30,seq_order_slot_39=30,seq_order_slot_4=4,seq_order_slot_40=30,seq_order_slot_41=30,seq_order_slot_42=30,seq_order_slot_43=30,seq_order_slot_44=30,seq_order_slot_45=30,seq_order_slot_46=30,seq_order_slot_47=30,seq_order_slot_48=30,seq_order_slot_49=30,seq_order_slot_5=6,seq_order_slot_50=30,seq_order_slot_51=30,seq_order_slot_52=30,seq_order_slot_53=30,seq_order_slot_54=30,seq_order_slot_55=30,seq_order_slot_56=30,seq_order_slot_57=30,seq_order_slot_58=30,seq_order_slot_59=30,seq_order_slot_6=6,seq_order_slot_60=30,seq_order_slot_61=30,seq_order_slot_62=30,seq_order_slot_63=30,seq_order_slot_64=30,seq_order_slot_7=30,seq_order_slot_8=30,seq_order_slot_9=30,simfilename_ch0=,simfilename_ch1=,simfilename_ch10=,simfilename_ch11=,simfilename_ch12=,simfilename_ch13=,simfilename_ch14=,simfilename_ch15=,simfilename_ch16=,simfilename_ch2=,simfilename_ch3=,simfilename_ch4=,simfilename_ch5=,simfilename_ch6=,simfilename_ch7=,simfilename_ch8=,simfilename_ch9=,thmax_ch0=0.0,thmax_ch1=0.0,thmax_ch10=0.0,thmax_ch11=0.0,thmax_ch12=0.0,thmax_ch13=0.0,thmax_ch14=0.0,thmax_ch15=0.0,thmax_ch16=0.0,thmax_ch2=0.0,thmax_ch3=0.0,thmax_ch4=0.0,thmax_ch5=0.0,thmax_ch6=0.0,thmax_ch7=0.0,thmax_ch8=0.0,thmax_ch9=0.0,thmin_ch0=0.0,thmin_ch1=0.0,thmin_ch10=0.0,thmin_ch11=0.0,thmin_ch12=0.0,thmin_ch13=0.0,thmin_ch14=0.0,thmin_ch15=0.0,thmin_ch16=0.0,thmin_ch2=0.0,thmin_ch3=0.0,thmin_ch4=0.0,thmin_ch5=0.0,thmin_ch6=0.0,thmin_ch7=0.0,thmin_ch8=0.0,thmin_ch9=0.0,tsclkdiv=1,tsclksel=1,tsd_max=125,tsd_min=0,use_ch0=false,use_ch1=true,use_ch10=false,use_ch11=false,use_ch12=false,use_ch13=false,use_ch14=false,use_ch15=false,use_ch16=false,use_ch2=true,use_ch3=true,use_ch4=true,use_ch5=false,use_ch6=true,use_ch7=false,use_ch8=false,use_ch9=false,use_tsd=false(altera_clock_bridge:16.1:DERIVED_CLOCK_RATE=50000000,EXPLICIT_CLOCK_RATE=0,NUM_CLOCK_OUTPUTS=1)(altera_reset_bridge:16.1:ACTIVE_LOW_RESET=1,AUTO_CLK_CLOCK_RATE=50000000,NUM_RESET_OUTPUTS=1,SYNCHRONOUS_EDGES=deassert,USE_RESET_REQUEST=0)(altera_modular_adc_control:16.1:analog_input_pin_mask=47,clkdiv=2,device_partname_fivechar_prefix=10M08,dual_adc_mode=false,enable_usr_sim=0,hard_pwd=0,is_this_first_or_second_adc=1,prescalar=0,reference_voltage_sim=59578,refsel=1,simfilename_ch0=,simfilename_ch1=,simfilename_ch10=,simfilename_ch11=,simfilename_ch12=,simfilename_ch13=,simfilename_ch14=,simfilename_ch15=,simfilename_ch16=,simfilename_ch2=,simfilename_ch3=,simfilename_ch4=,simfilename_ch5=,simfilename_ch6=,simfilename_ch7=,simfilename_ch8=,simfilename_ch9=,tsclkdiv=1,tsclksel=1)(altera_modular_adc_sequencer:16.1:CSD_LENGTH=5,CSD_SLOT_0=1,CSD_SLOT_0_ADC2=0,CSD_SLOT_1=2,CSD_SLOT_10=0,CSD_SLOT_10_ADC2=0,CSD_SLOT_11=0,CSD_SLOT_11_ADC2=0,CSD_SLOT_12=0,CSD_SLOT_12_ADC2=0,CSD_SLOT_13=0,CSD_SLOT_13_ADC2=0,CSD_SLOT_14=0,CSD_SLOT_14_ADC2=0,CSD_SLOT_15=0,CSD_SLOT_15_ADC2=0,CSD_SLOT_16=0,CSD_SLOT_16_ADC2=0,CSD_SLOT_17=0,CSD_SLOT_17_ADC2=0,CSD_SLOT_18=0,CSD_SLOT_18_ADC2=0,CSD_SLOT_19=0,CSD_SLOT_19_ADC2=0,CSD_SLOT_1_ADC2=0,CSD_SLOT_2=3,CSD_SLOT_20=0,CSD_SLOT_20_ADC2=0,CSD_SLOT_21=0,CSD_SLOT_21_ADC2=0,CSD_SLOT_22=0,CSD_SLOT_22_ADC2=0,CSD_SLOT_23=0,CSD_SLOT_23_ADC2=0,CSD_SLOT_24=0,CSD_SLOT_24_ADC2=0,CSD_SLOT_25=0,CSD_SLOT_25_ADC2=0,CSD_SLOT_26=0,CSD_SLOT_26_ADC2=0,CSD_SLOT_27=0,CSD_SLOT_27_ADC2=0,CSD_SLOT_28=0,CSD_SLOT_28_ADC2=0,CSD_SLOT_29=0,CSD_SLOT_29_ADC2=0,CSD_SLOT_2_ADC2=0,CSD_SLOT_3=4,CSD_SLOT_30=0,CSD_SLOT_30_ADC2=0,CSD_SLOT_31=0,CSD_SLOT_31_ADC2=0,CSD_SLOT_32=0,CSD_SLOT_32_ADC2=0,CSD_SLOT_33=0,CSD_SLOT_33_ADC2=0,CSD_SLOT_34=0,CSD_SLOT_34_ADC2=0,CSD_SLOT_35=0,CSD_SLOT_35_ADC2=0,CSD_SLOT_36=0,CSD_SLOT_36_ADC2=0,CSD_SLOT_37=0,CSD_SLOT_37_ADC2=0,CSD_SLOT_38=0,CSD_SLOT_38_ADC2=0,CSD_SLOT_39=0,CSD_SLOT_39_ADC2=0,CSD_SLOT_3_ADC2=0,CSD_SLOT_4=6,CSD_SLOT_40=0,CSD_SLOT_40_ADC2=0,CSD_SLOT_41=0,CSD_SLOT_41_ADC2=0,CSD_SLOT_42=0,CSD_SLOT_42_ADC2=0,CSD_SLOT_43=0,CSD_SLOT_43_ADC2=0,CSD_SLOT_44=0,CSD_SLOT_44_ADC2=0,CSD_SLOT_45=0,CSD_SLOT_45_ADC2=0,CSD_SLOT_46=0,CSD_SLOT_46_ADC2=0,CSD_SLOT_47=0,CSD_SLOT_47_ADC2=0,CSD_SLOT_48=0,CSD_SLOT_48_ADC2=0,CSD_SLOT_49=0,CSD_SLOT_49_ADC2=0,CSD_SLOT_4_ADC2=0,CSD_SLOT_5=0,CSD_SLOT_50=0,CSD_SLOT_50_ADC2=0,CSD_SLOT_51=0,CSD_SLOT_51_ADC2=0,CSD_SLOT_52=0,CSD_SLOT_52_ADC2=0,CSD_SLOT_53=0,CSD_SLOT_53_ADC2=0,CSD_SLOT_54=0,CSD_SLOT_54_ADC2=0,CSD_SLOT_55=0,CSD_SLOT_55_ADC2=0,CSD_SLOT_56=0,CSD_SLOT_56_ADC2=0,CSD_SLOT_57=0,CSD_SLOT_57_ADC2=0,CSD_SLOT_58=0,CSD_SLOT_58_ADC2=0,CSD_SLOT_59=0,CSD_SLOT_59_ADC2=0,CSD_SLOT_5_ADC2=0,CSD_SLOT_6=0,CSD_SLOT_60=0,CSD_SLOT_60_ADC2=0,CSD_SLOT_61=0,CSD_SLOT_61_ADC2=0,CSD_SLOT_62=0,CSD_SLOT_62_ADC2=0,CSD_SLOT_63=0,CSD_SLOT_63_ADC2=0,CSD_SLOT_6_ADC2=0,CSD_SLOT_7=0,CSD_SLOT_7_ADC2=0,CSD_SLOT_8=0,CSD_SLOT_8_ADC2=0,CSD_SLOT_9=0,CSD_SLOT_9_ADC2=0,DUAL_ADC_MODE=false)(clock:16.1:)(clock:16.1:)(reset:16.1:)(avalon_streaming:16.1:)(clock:16.1:)(reset:16.1:))(clock_source:16.1:clockFrequency=50000000,clockFrequencyKnown=true,inputClockFrequency=0,resetSynchronousEdges=NONE)(clock:16.1:)(reset:16.1:)"
+   instancePathKey="adc"
+   kind="adc"
+   version="1.0"
+   name="adc">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="-1" />
+  <parameter name="AUTO_ADC_ADC_PLL_CLOCK_RESET_DOMAIN" value="-1" />
+  <parameter name="AUTO_GENERATION_ID" value="1481677280" />
+  <parameter name="AUTO_DEVICE" value="10M08SAM153I7G" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="MAX 10" />
+  <parameter name="AUTO_ADC_ADC_PLL_CLOCK_CLOCK_DOMAIN" value="-1" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="-1" />
+  <parameter name="AUTO_ADC_ADC_PLL_CLOCK_CLOCK_RATE" value="-1" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="-1" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <generatedFiles>
+   <file path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/adc.v" type="VERILOG" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/adc_adc.v"
+       type="VERILOG" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control.v"
+       type="VERILOG"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control_avrg_fifo.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control_fsm.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/chsel_code_converter_sw_to_hw.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/fiftyfivenm_adcblock_primitive_wrapper.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/fiftyfivenm_adcblock_top_wrapper.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control.sdc"
+       type="SDC"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer.v"
+       type="VERILOG"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer_csr.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer_ctrl.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_reset_controller.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_reset_synchronizer.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_reset_controller.sdc"
+       type="SDC"
+       attributes="" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file path="C:/AERO/AERO_RTF_I2C_ADC/adc.qsys" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/altera_modular_adc/top/altera_modular_adc_hw.tcl" />
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/altera_modular_adc/control/altera_modular_adc_control_hw.tcl" />
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/altera_modular_adc/sequencer/altera_modular_adc_sequencer_hw.tcl" />
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/merlin/altera_reset_controller/altera_reset_controller_hw.tcl" />
+  </childSourceFiles>
+  <messages>
+   <message level="Debug" culprit="adc">queue size: 0 starting:adc "adc"</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug">Transform: CustomInstructionTransform</message>
+   <message level="Debug">No custom instruction connections, skipping transform </message>
+   <message level="Debug" culprit="merlin_custom_instruction_transform"><![CDATA[After transform: <b>2</b> modules, <b>2</b> connections]]></message>
+   <message level="Debug">Transform: MMTransform</message>
+   <message level="Debug">Transform: InterruptMapperTransform</message>
+   <message level="Debug">Transform: InterruptSyncTransform</message>
+   <message level="Debug">Transform: InterruptFanoutTransform</message>
+   <message level="Debug">Transform: AvalonStreamingTransform</message>
+   <message level="Debug">Transform: ResetAdaptation</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug" culprit="reset_adaptation_transform"><![CDATA[After transform: <b>3</b> modules, <b>4</b> connections]]></message>
+   <message level="Debug" culprit="adc"><![CDATA["<b>adc</b>" reuses <b>altera_modular_adc</b> "<b>submodules/adc_adc</b>"]]></message>
+   <message level="Debug" culprit="adc"><![CDATA["<b>adc</b>" reuses <b>altera_reset_controller</b> "<b>submodules/altera_reset_controller</b>"]]></message>
+   <message level="Debug" culprit="adc">queue size: 1 starting:altera_modular_adc "submodules/adc_adc"</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug">Transform: CustomInstructionTransform</message>
+   <message level="Debug">No custom instruction connections, skipping transform </message>
+   <message level="Debug" culprit="merlin_custom_instruction_transform"><![CDATA[After transform: <b>4</b> modules, <b>6</b> connections]]></message>
+   <message level="Debug">Transform: MMTransform</message>
+   <message level="Debug">Transform: InterruptMapperTransform</message>
+   <message level="Debug">Transform: InterruptSyncTransform</message>
+   <message level="Debug">Transform: InterruptFanoutTransform</message>
+   <message level="Debug">Transform: AvalonStreamingTransform</message>
+   <message level="Debug">Transform: ResetAdaptation</message>
+   <message level="Debug" culprit="adc"><![CDATA["<b>adc</b>" reuses <b>altera_modular_adc_control</b> "<b>submodules/altera_modular_adc_control</b>"]]></message>
+   <message level="Debug" culprit="adc"><![CDATA["<b>adc</b>" reuses <b>altera_modular_adc_sequencer</b> "<b>submodules/altera_modular_adc_sequencer</b>"]]></message>
+   <message level="Info" culprit="adc"><![CDATA["<b>adc</b>" instantiated <b>altera_modular_adc</b> "<b>adc</b>"]]></message>
+   <message level="Debug" culprit="adc">queue size: 1 starting:altera_modular_adc_control "submodules/altera_modular_adc_control"</message>
+   <message level="Info" culprit="control_internal"><![CDATA["<b>adc</b>" instantiated <b>altera_modular_adc_control</b> "<b>control_internal</b>"]]></message>
+   <message level="Debug" culprit="adc">queue size: 0 starting:altera_modular_adc_sequencer "submodules/altera_modular_adc_sequencer"</message>
+   <message level="Info" culprit="sequencer_internal"><![CDATA["<b>adc</b>" instantiated <b>altera_modular_adc_sequencer</b> "<b>sequencer_internal</b>"]]></message>
+   <message level="Debug" culprit="adc">queue size: 2 starting:altera_reset_controller "submodules/altera_reset_controller"</message>
+   <message level="Info" culprit="rst_controller"><![CDATA["<b>adc</b>" instantiated <b>altera_reset_controller</b> "<b>rst_controller</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_modular_adc:16.1:AUTO_DEVICE_SPEEDGRADE=7,CLOCK_FREQ=50000000,CORE_VAR=2,DEVICE_PART=10M08SAM153I7G,ENABLE_DEBUG=0,FAMILY=MAX 10,MONITOR_COUNT_WIDTH=12,adc_count_on_device=1,analog_input_pin_mask=0,clkdiv=2,derived_clkdiv=2,device_adc_type=22,device_partname_fivechar_prefix=10M08,device_power_supply_type=1,en_thmax_ch0=false,en_thmax_ch1=false,en_thmax_ch10=false,en_thmax_ch11=false,en_thmax_ch12=false,en_thmax_ch13=false,en_thmax_ch14=false,en_thmax_ch15=false,en_thmax_ch16=false,en_thmax_ch2=false,en_thmax_ch3=false,en_thmax_ch4=false,en_thmax_ch5=false,en_thmax_ch6=false,en_thmax_ch7=false,en_thmax_ch8=false,en_thmax_ch9=false,en_thmin_ch0=false,en_thmin_ch1=false,en_thmin_ch10=false,en_thmin_ch11=false,en_thmin_ch12=false,en_thmin_ch13=false,en_thmin_ch14=false,en_thmin_ch15=false,en_thmin_ch16=false,en_thmin_ch2=false,en_thmin_ch3=false,en_thmin_ch4=false,en_thmin_ch5=false,en_thmin_ch6=false,en_thmin_ch7=false,en_thmin_ch8=false,en_thmin_ch9=false,en_tsd_max=false,en_tsd_min=false,enable_usr_sim=0,external_vref=2.5,hard_pwd=0,int_vref_nonvr=2.5,int_vref_vr=3.0,ip_is_for_which_adc=1,is_this_first_or_second_adc=1,max_adc_count_on_die=1,prescalar=0,prescaler_ch16=false,prescaler_ch8=false,reference_voltage=3.0,reference_voltage_sim=65536,refsel=1,sample_rate=0,seq_order_length=5,seq_order_slot_1=1,seq_order_slot_10=30,seq_order_slot_11=30,seq_order_slot_12=30,seq_order_slot_13=30,seq_order_slot_14=30,seq_order_slot_15=30,seq_order_slot_16=30,seq_order_slot_17=30,seq_order_slot_18=30,seq_order_slot_19=30,seq_order_slot_2=2,seq_order_slot_20=30,seq_order_slot_21=30,seq_order_slot_22=30,seq_order_slot_23=30,seq_order_slot_24=30,seq_order_slot_25=30,seq_order_slot_26=30,seq_order_slot_27=30,seq_order_slot_28=30,seq_order_slot_29=30,seq_order_slot_3=3,seq_order_slot_30=30,seq_order_slot_31=30,seq_order_slot_32=30,seq_order_slot_33=30,seq_order_slot_34=30,seq_order_slot_35=30,seq_order_slot_36=30,seq_order_slot_37=30,seq_order_slot_38=30,seq_order_slot_39=30,seq_order_slot_4=4,seq_order_slot_40=30,seq_order_slot_41=30,seq_order_slot_42=30,seq_order_slot_43=30,seq_order_slot_44=30,seq_order_slot_45=30,seq_order_slot_46=30,seq_order_slot_47=30,seq_order_slot_48=30,seq_order_slot_49=30,seq_order_slot_5=6,seq_order_slot_50=30,seq_order_slot_51=30,seq_order_slot_52=30,seq_order_slot_53=30,seq_order_slot_54=30,seq_order_slot_55=30,seq_order_slot_56=30,seq_order_slot_57=30,seq_order_slot_58=30,seq_order_slot_59=30,seq_order_slot_6=6,seq_order_slot_60=30,seq_order_slot_61=30,seq_order_slot_62=30,seq_order_slot_63=30,seq_order_slot_64=30,seq_order_slot_7=30,seq_order_slot_8=30,seq_order_slot_9=30,simfilename_ch0=,simfilename_ch1=,simfilename_ch10=,simfilename_ch11=,simfilename_ch12=,simfilename_ch13=,simfilename_ch14=,simfilename_ch15=,simfilename_ch16=,simfilename_ch2=,simfilename_ch3=,simfilename_ch4=,simfilename_ch5=,simfilename_ch6=,simfilename_ch7=,simfilename_ch8=,simfilename_ch9=,thmax_ch0=0.0,thmax_ch1=0.0,thmax_ch10=0.0,thmax_ch11=0.0,thmax_ch12=0.0,thmax_ch13=0.0,thmax_ch14=0.0,thmax_ch15=0.0,thmax_ch16=0.0,thmax_ch2=0.0,thmax_ch3=0.0,thmax_ch4=0.0,thmax_ch5=0.0,thmax_ch6=0.0,thmax_ch7=0.0,thmax_ch8=0.0,thmax_ch9=0.0,thmin_ch0=0.0,thmin_ch1=0.0,thmin_ch10=0.0,thmin_ch11=0.0,thmin_ch12=0.0,thmin_ch13=0.0,thmin_ch14=0.0,thmin_ch15=0.0,thmin_ch16=0.0,thmin_ch2=0.0,thmin_ch3=0.0,thmin_ch4=0.0,thmin_ch5=0.0,thmin_ch6=0.0,thmin_ch7=0.0,thmin_ch8=0.0,thmin_ch9=0.0,tsclkdiv=1,tsclksel=1,tsd_max=125,tsd_min=0,use_ch0=false,use_ch1=true,use_ch10=false,use_ch11=false,use_ch12=false,use_ch13=false,use_ch14=false,use_ch15=false,use_ch16=false,use_ch2=true,use_ch3=true,use_ch4=true,use_ch5=false,use_ch6=true,use_ch7=false,use_ch8=false,use_ch9=false,use_tsd=false(altera_clock_bridge:16.1:DERIVED_CLOCK_RATE=50000000,EXPLICIT_CLOCK_RATE=0,NUM_CLOCK_OUTPUTS=1)(altera_reset_bridge:16.1:ACTIVE_LOW_RESET=1,AUTO_CLK_CLOCK_RATE=50000000,NUM_RESET_OUTPUTS=1,SYNCHRONOUS_EDGES=deassert,USE_RESET_REQUEST=0)(altera_modular_adc_control:16.1:analog_input_pin_mask=47,clkdiv=2,device_partname_fivechar_prefix=10M08,dual_adc_mode=false,enable_usr_sim=0,hard_pwd=0,is_this_first_or_second_adc=1,prescalar=0,reference_voltage_sim=59578,refsel=1,simfilename_ch0=,simfilename_ch1=,simfilename_ch10=,simfilename_ch11=,simfilename_ch12=,simfilename_ch13=,simfilename_ch14=,simfilename_ch15=,simfilename_ch16=,simfilename_ch2=,simfilename_ch3=,simfilename_ch4=,simfilename_ch5=,simfilename_ch6=,simfilename_ch7=,simfilename_ch8=,simfilename_ch9=,tsclkdiv=1,tsclksel=1)(altera_modular_adc_sequencer:16.1:CSD_LENGTH=5,CSD_SLOT_0=1,CSD_SLOT_0_ADC2=0,CSD_SLOT_1=2,CSD_SLOT_10=0,CSD_SLOT_10_ADC2=0,CSD_SLOT_11=0,CSD_SLOT_11_ADC2=0,CSD_SLOT_12=0,CSD_SLOT_12_ADC2=0,CSD_SLOT_13=0,CSD_SLOT_13_ADC2=0,CSD_SLOT_14=0,CSD_SLOT_14_ADC2=0,CSD_SLOT_15=0,CSD_SLOT_15_ADC2=0,CSD_SLOT_16=0,CSD_SLOT_16_ADC2=0,CSD_SLOT_17=0,CSD_SLOT_17_ADC2=0,CSD_SLOT_18=0,CSD_SLOT_18_ADC2=0,CSD_SLOT_19=0,CSD_SLOT_19_ADC2=0,CSD_SLOT_1_ADC2=0,CSD_SLOT_2=3,CSD_SLOT_20=0,CSD_SLOT_20_ADC2=0,CSD_SLOT_21=0,CSD_SLOT_21_ADC2=0,CSD_SLOT_22=0,CSD_SLOT_22_ADC2=0,CSD_SLOT_23=0,CSD_SLOT_23_ADC2=0,CSD_SLOT_24=0,CSD_SLOT_24_ADC2=0,CSD_SLOT_25=0,CSD_SLOT_25_ADC2=0,CSD_SLOT_26=0,CSD_SLOT_26_ADC2=0,CSD_SLOT_27=0,CSD_SLOT_27_ADC2=0,CSD_SLOT_28=0,CSD_SLOT_28_ADC2=0,CSD_SLOT_29=0,CSD_SLOT_29_ADC2=0,CSD_SLOT_2_ADC2=0,CSD_SLOT_3=4,CSD_SLOT_30=0,CSD_SLOT_30_ADC2=0,CSD_SLOT_31=0,CSD_SLOT_31_ADC2=0,CSD_SLOT_32=0,CSD_SLOT_32_ADC2=0,CSD_SLOT_33=0,CSD_SLOT_33_ADC2=0,CSD_SLOT_34=0,CSD_SLOT_34_ADC2=0,CSD_SLOT_35=0,CSD_SLOT_35_ADC2=0,CSD_SLOT_36=0,CSD_SLOT_36_ADC2=0,CSD_SLOT_37=0,CSD_SLOT_37_ADC2=0,CSD_SLOT_38=0,CSD_SLOT_38_ADC2=0,CSD_SLOT_39=0,CSD_SLOT_39_ADC2=0,CSD_SLOT_3_ADC2=0,CSD_SLOT_4=6,CSD_SLOT_40=0,CSD_SLOT_40_ADC2=0,CSD_SLOT_41=0,CSD_SLOT_41_ADC2=0,CSD_SLOT_42=0,CSD_SLOT_42_ADC2=0,CSD_SLOT_43=0,CSD_SLOT_43_ADC2=0,CSD_SLOT_44=0,CSD_SLOT_44_ADC2=0,CSD_SLOT_45=0,CSD_SLOT_45_ADC2=0,CSD_SLOT_46=0,CSD_SLOT_46_ADC2=0,CSD_SLOT_47=0,CSD_SLOT_47_ADC2=0,CSD_SLOT_48=0,CSD_SLOT_48_ADC2=0,CSD_SLOT_49=0,CSD_SLOT_49_ADC2=0,CSD_SLOT_4_ADC2=0,CSD_SLOT_5=0,CSD_SLOT_50=0,CSD_SLOT_50_ADC2=0,CSD_SLOT_51=0,CSD_SLOT_51_ADC2=0,CSD_SLOT_52=0,CSD_SLOT_52_ADC2=0,CSD_SLOT_53=0,CSD_SLOT_53_ADC2=0,CSD_SLOT_54=0,CSD_SLOT_54_ADC2=0,CSD_SLOT_55=0,CSD_SLOT_55_ADC2=0,CSD_SLOT_56=0,CSD_SLOT_56_ADC2=0,CSD_SLOT_57=0,CSD_SLOT_57_ADC2=0,CSD_SLOT_58=0,CSD_SLOT_58_ADC2=0,CSD_SLOT_59=0,CSD_SLOT_59_ADC2=0,CSD_SLOT_5_ADC2=0,CSD_SLOT_6=0,CSD_SLOT_60=0,CSD_SLOT_60_ADC2=0,CSD_SLOT_61=0,CSD_SLOT_61_ADC2=0,CSD_SLOT_62=0,CSD_SLOT_62_ADC2=0,CSD_SLOT_63=0,CSD_SLOT_63_ADC2=0,CSD_SLOT_6_ADC2=0,CSD_SLOT_7=0,CSD_SLOT_7_ADC2=0,CSD_SLOT_8=0,CSD_SLOT_8_ADC2=0,CSD_SLOT_9=0,CSD_SLOT_9_ADC2=0,DUAL_ADC_MODE=false)(clock:16.1:)(clock:16.1:)(reset:16.1:)(avalon_streaming:16.1:)(clock:16.1:)(reset:16.1:)"
+   instancePathKey="adc:.:adc"
+   kind="altera_modular_adc"
+   version="16.1"
+   name="adc_adc">
+  <parameter name="derived_clkdiv" value="2" />
+  <parameter name="thmin_ch10" value="0.0" />
+  <parameter name="thmin_ch12" value="0.0" />
+  <parameter name="thmin_ch11" value="0.0" />
+  <parameter name="thmin_ch14" value="0.0" />
+  <parameter name="thmin_ch13" value="0.0" />
+  <parameter name="thmin_ch16" value="0.0" />
+  <parameter name="thmin_ch15" value="0.0" />
+  <parameter name="use_ch14" value="false" />
+  <parameter name="ip_is_for_which_adc" value="1" />
+  <parameter name="use_ch15" value="false" />
+  <parameter name="use_ch16" value="false" />
+  <parameter name="DEVICE_PART" value="10M08SAM153I7G" />
+  <parameter name="adc_count_on_device" value="1" />
+  <parameter name="seq_order_length" value="5" />
+  <parameter name="use_tsd" value="false" />
+  <parameter name="FAMILY" value="MAX 10" />
+  <parameter name="en_tsd_min" value="false" />
+  <parameter name="use_ch0" value="false" />
+  <parameter name="device_partname_fivechar_prefix" value="10M08" />
+  <parameter name="use_ch3" value="true" />
+  <parameter name="use_ch4" value="true" />
+  <parameter name="CORE_VAR" value="2" />
+  <parameter name="use_ch1" value="true" />
+  <parameter name="en_thmin_ch15" value="false" />
+  <parameter name="use_ch2" value="true" />
+  <parameter name="en_thmin_ch16" value="false" />
+  <parameter name="use_ch7" value="false" />
+  <parameter name="use_ch8" value="false" />
+  <parameter name="use_ch5" value="false" />
+  <parameter name="use_ch6" value="true" />
+  <parameter name="MONITOR_COUNT_WIDTH" value="12" />
+  <parameter name="use_ch9" value="false" />
+  <parameter name="refsel" value="1" />
+  <parameter name="prescaler_ch8" value="false" />
+  <parameter name="prescalar" value="0" />
+  <parameter name="device_adc_type" value="22" />
+  <parameter name="reference_voltage_sim" value="65536" />
+  <parameter name="en_thmin_ch13" value="false" />
+  <parameter name="en_thmin_ch14" value="false" />
+  <parameter name="en_thmin_ch11" value="false" />
+  <parameter name="en_thmin_ch12" value="false" />
+  <parameter name="en_thmin_ch10" value="false" />
+  <parameter name="thmax_ch1" value="0.0" />
+  <parameter name="thmax_ch0" value="0.0" />
+  <parameter name="thmax_ch3" value="0.0" />
+  <parameter name="thmax_ch2" value="0.0" />
+  <parameter name="int_vref_vr" value="3.0" />
+  <parameter name="tsd_min" value="0" />
+  <parameter name="thmax_ch16" value="0.0" />
+  <parameter name="thmax_ch15" value="0.0" />
+  <parameter name="thmax_ch14" value="0.0" />
+  <parameter name="thmax_ch13" value="0.0" />
+  <parameter name="thmax_ch12" value="0.0" />
+  <parameter name="thmax_ch11" value="0.0" />
+  <parameter name="thmax_ch10" value="0.0" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="thmax_ch5" value="0.0" />
+  <parameter name="thmax_ch4" value="0.0" />
+  <parameter name="thmax_ch7" value="0.0" />
+  <parameter name="thmax_ch6" value="0.0" />
+  <parameter name="thmax_ch9" value="0.0" />
+  <parameter name="simfilename_ch15" value="" />
+  <parameter name="thmax_ch8" value="0.0" />
+  <parameter name="simfilename_ch16" value="" />
+  <parameter name="simfilename_ch13" value="" />
+  <parameter name="simfilename_ch14" value="" />
+  <parameter name="simfilename_ch11" value="" />
+  <parameter name="simfilename_ch12" value="" />
+  <parameter name="analog_input_pin_mask" value="0" />
+  <parameter name="simfilename_ch10" value="" />
+  <parameter name="seq_order_slot_23" value="30" />
+  <parameter name="seq_order_slot_22" value="30" />
+  <parameter name="seq_order_slot_25" value="30" />
+  <parameter name="seq_order_slot_24" value="30" />
+  <parameter name="hard_pwd" value="0" />
+  <parameter name="seq_order_slot_27" value="30" />
+  <parameter name="seq_order_slot_26" value="30" />
+  <parameter name="device_power_supply_type" value="1" />
+  <parameter name="seq_order_slot_29" value="30" />
+  <parameter name="seq_order_slot_28" value="30" />
+  <parameter name="simfilename_ch6" value="" />
+  <parameter name="simfilename_ch7" value="" />
+  <parameter name="simfilename_ch8" value="" />
+  <parameter name="simfilename_ch9" value="" />
+  <parameter name="simfilename_ch2" value="" />
+  <parameter name="simfilename_ch3" value="" />
+  <parameter name="simfilename_ch4" value="" />
+  <parameter name="reference_voltage" value="3.0" />
+  <parameter name="simfilename_ch5" value="" />
+  <parameter name="simfilename_ch0" value="" />
+  <parameter name="simfilename_ch1" value="" />
+  <parameter name="seq_order_slot_21" value="30" />
+  <parameter name="seq_order_slot_20" value="30" />
+  <parameter name="seq_order_slot_34" value="30" />
+  <parameter name="seq_order_slot_33" value="30" />
+  <parameter name="seq_order_slot_36" value="30" />
+  <parameter name="seq_order_slot_35" value="30" />
+  <parameter name="seq_order_slot_38" value="30" />
+  <parameter name="seq_order_slot_37" value="30" />
+  <parameter name="seq_order_slot_39" value="30" />
+  <parameter name="max_adc_count_on_die" value="1" />
+  <parameter name="clkdiv" value="2" />
+  <parameter name="seq_order_slot_30" value="30" />
+  <parameter name="seq_order_slot_32" value="30" />
+  <parameter name="seq_order_slot_31" value="30" />
+  <parameter name="en_thmax_ch13" value="false" />
+  <parameter name="en_thmax_ch14" value="false" />
+  <parameter name="en_thmax_ch15" value="false" />
+  <parameter name="en_thmax_ch16" value="false" />
+  <parameter name="en_thmax_ch10" value="false" />
+  <parameter name="en_thmax_ch11" value="false" />
+  <parameter name="en_thmax_ch12" value="false" />
+  <parameter name="en_thmax_ch7" value="false" />
+  <parameter name="seq_order_slot_4" value="4" />
+  <parameter name="seq_order_slot_12" value="30" />
+  <parameter name="en_thmax_ch6" value="false" />
+  <parameter name="seq_order_slot_5" value="6" />
+  <parameter name="seq_order_slot_11" value="30" />
+  <parameter name="en_thmax_ch9" value="false" />
+  <parameter name="seq_order_slot_6" value="6" />
+  <parameter name="seq_order_slot_14" value="30" />
+  <parameter name="en_thmax_ch8" value="false" />
+  <parameter name="seq_order_slot_7" value="30" />
+  <parameter name="seq_order_slot_13" value="30" />
+  <parameter name="en_thmax_ch3" value="false" />
+  <parameter name="seq_order_slot_16" value="30" />
+  <parameter name="en_thmax_ch2" value="false" />
+  <parameter name="seq_order_slot_1" value="1" />
+  <parameter name="seq_order_slot_15" value="30" />
+  <parameter name="en_thmax_ch5" value="false" />
+  <parameter name="seq_order_slot_2" value="2" />
+  <parameter name="seq_order_slot_18" value="30" />
+  <parameter name="en_thmax_ch4" value="false" />
+  <parameter name="seq_order_slot_3" value="3" />
+  <parameter name="seq_order_slot_17" value="30" />
+  <parameter name="seq_order_slot_19" value="30" />
+  <parameter name="en_thmax_ch1" value="false" />
+  <parameter name="en_thmax_ch0" value="false" />
+  <parameter name="seq_order_slot_8" value="30" />
+  <parameter name="seq_order_slot_9" value="30" />
+  <parameter name="en_thmin_ch3" value="false" />
+  <parameter name="prescaler_ch16" value="false" />
+  <parameter name="en_thmin_ch2" value="false" />
+  <parameter name="en_thmin_ch1" value="false" />
+  <parameter name="en_thmin_ch0" value="false" />
+  <parameter name="sample_rate" value="0" />
+  <parameter name="en_thmin_ch9" value="false" />
+  <parameter name="en_tsd_max" value="false" />
+  <parameter name="en_thmin_ch8" value="false" />
+  <parameter name="en_thmin_ch7" value="false" />
+  <parameter name="en_thmin_ch6" value="false" />
+  <parameter name="en_thmin_ch5" value="false" />
+  <parameter name="seq_order_slot_10" value="30" />
+  <parameter name="en_thmin_ch4" value="false" />
+  <parameter name="external_vref" value="2.5" />
+  <parameter name="seq_order_slot_61" value="30" />
+  <parameter name="seq_order_slot_60" value="30" />
+  <parameter name="seq_order_slot_63" value="30" />
+  <parameter name="seq_order_slot_62" value="30" />
+  <parameter name="seq_order_slot_64" value="30" />
+  <parameter name="CLOCK_FREQ" value="50000000" />
+  <parameter name="tsclksel" value="1" />
+  <parameter name="is_this_first_or_second_adc" value="1" />
+  <parameter name="seq_order_slot_45" value="30" />
+  <parameter name="seq_order_slot_44" value="30" />
+  <parameter name="seq_order_slot_47" value="30" />
+  <parameter name="seq_order_slot_46" value="30" />
+  <parameter name="seq_order_slot_49" value="30" />
+  <parameter name="seq_order_slot_48" value="30" />
+  <parameter name="ENABLE_DEBUG" value="0" />
+  <parameter name="int_vref_nonvr" value="2.5" />
+  <parameter name="tsd_max" value="125" />
+  <parameter name="seq_order_slot_41" value="30" />
+  <parameter name="seq_order_slot_40" value="30" />
+  <parameter name="seq_order_slot_43" value="30" />
+  <parameter name="seq_order_slot_42" value="30" />
+  <parameter name="thmin_ch1" value="0.0" />
+  <parameter name="seq_order_slot_56" value="30" />
+  <parameter name="thmin_ch0" value="0.0" />
+  <parameter name="seq_order_slot_55" value="30" />
+  <parameter name="seq_order_slot_58" value="30" />
+  <parameter name="seq_order_slot_57" value="30" />
+  <parameter name="thmin_ch5" value="0.0" />
+  <parameter name="use_ch10" value="false" />
+  <parameter name="thmin_ch4" value="0.0" />
+  <parameter name="use_ch11" value="false" />
+  <parameter name="seq_order_slot_59" value="30" />
+  <parameter name="tsclkdiv" value="1" />
+  <parameter name="thmin_ch3" value="0.0" />
+  <parameter name="use_ch12" value="false" />
+  <parameter name="thmin_ch2" value="0.0" />
+  <parameter name="use_ch13" value="false" />
+  <parameter name="enable_usr_sim" value="0" />
+  <parameter name="thmin_ch9" value="0.0" />
+  <parameter name="thmin_ch8" value="0.0" />
+  <parameter name="thmin_ch7" value="0.0" />
+  <parameter name="seq_order_slot_50" value="30" />
+  <parameter name="thmin_ch6" value="0.0" />
+  <parameter name="seq_order_slot_52" value="30" />
+  <parameter name="seq_order_slot_51" value="30" />
+  <parameter name="seq_order_slot_54" value="30" />
+  <parameter name="seq_order_slot_53" value="30" />
+  <generatedFiles>
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/adc_adc.v"
+       type="VERILOG" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control.v"
+       type="VERILOG"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control_avrg_fifo.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control_fsm.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/chsel_code_converter_sw_to_hw.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/fiftyfivenm_adcblock_primitive_wrapper.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/fiftyfivenm_adcblock_top_wrapper.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control.sdc"
+       type="SDC"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer.v"
+       type="VERILOG"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer_csr.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer_ctrl.v"
+       type="VERILOG"
+       attributes="" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/altera_modular_adc/top/altera_modular_adc_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/altera_modular_adc/control/altera_modular_adc_control_hw.tcl" />
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/altera_modular_adc/sequencer/altera_modular_adc_sequencer_hw.tcl" />
+  </childSourceFiles>
+  <instantiator instantiator="adc" as="adc" />
+  <messages>
+   <message level="Debug" culprit="adc">queue size: 1 starting:altera_modular_adc "submodules/adc_adc"</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug">Transform: CustomInstructionTransform</message>
+   <message level="Debug">No custom instruction connections, skipping transform </message>
+   <message level="Debug" culprit="merlin_custom_instruction_transform"><![CDATA[After transform: <b>4</b> modules, <b>6</b> connections]]></message>
+   <message level="Debug">Transform: MMTransform</message>
+   <message level="Debug">Transform: InterruptMapperTransform</message>
+   <message level="Debug">Transform: InterruptSyncTransform</message>
+   <message level="Debug">Transform: InterruptFanoutTransform</message>
+   <message level="Debug">Transform: AvalonStreamingTransform</message>
+   <message level="Debug">Transform: ResetAdaptation</message>
+   <message level="Debug" culprit="adc"><![CDATA["<b>adc</b>" reuses <b>altera_modular_adc_control</b> "<b>submodules/altera_modular_adc_control</b>"]]></message>
+   <message level="Debug" culprit="adc"><![CDATA["<b>adc</b>" reuses <b>altera_modular_adc_sequencer</b> "<b>submodules/altera_modular_adc_sequencer</b>"]]></message>
+   <message level="Info" culprit="adc"><![CDATA["<b>adc</b>" instantiated <b>altera_modular_adc</b> "<b>adc</b>"]]></message>
+   <message level="Debug" culprit="adc">queue size: 1 starting:altera_modular_adc_control "submodules/altera_modular_adc_control"</message>
+   <message level="Info" culprit="control_internal"><![CDATA["<b>adc</b>" instantiated <b>altera_modular_adc_control</b> "<b>control_internal</b>"]]></message>
+   <message level="Debug" culprit="adc">queue size: 0 starting:altera_modular_adc_sequencer "submodules/altera_modular_adc_sequencer"</message>
+   <message level="Info" culprit="sequencer_internal"><![CDATA["<b>adc</b>" instantiated <b>altera_modular_adc_sequencer</b> "<b>sequencer_internal</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_reset_controller:16.1:ADAPT_RESET_REQUEST=0,MIN_RST_ASSERTION_TIME=3,NUM_RESET_INPUTS=1,OUTPUT_RESET_SYNC_EDGES=deassert,RESET_REQUEST_PRESENT=0,RESET_REQ_EARLY_DSRT_TIME=1,RESET_REQ_WAIT_TIME=1,SYNC_DEPTH=2,USE_RESET_REQUEST_IN0=0,USE_RESET_REQUEST_IN1=0,USE_RESET_REQUEST_IN10=0,USE_RESET_REQUEST_IN11=0,USE_RESET_REQUEST_IN12=0,USE_RESET_REQUEST_IN13=0,USE_RESET_REQUEST_IN14=0,USE_RESET_REQUEST_IN15=0,USE_RESET_REQUEST_IN2=0,USE_RESET_REQUEST_IN3=0,USE_RESET_REQUEST_IN4=0,USE_RESET_REQUEST_IN5=0,USE_RESET_REQUEST_IN6=0,USE_RESET_REQUEST_IN7=0,USE_RESET_REQUEST_IN8=0,USE_RESET_REQUEST_IN9=0,USE_RESET_REQUEST_INPUT=0"
+   instancePathKey="adc:.:rst_controller"
+   kind="altera_reset_controller"
+   version="16.1"
+   name="altera_reset_controller">
+  <generatedFiles>
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_reset_controller.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_reset_synchronizer.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_reset_controller.sdc"
+       type="SDC"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/merlin/altera_reset_controller/altera_reset_controller_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="adc" as="rst_controller" />
+  <messages>
+   <message level="Debug" culprit="adc">queue size: 2 starting:altera_reset_controller "submodules/altera_reset_controller"</message>
+   <message level="Info" culprit="rst_controller"><![CDATA["<b>adc</b>" instantiated <b>altera_reset_controller</b> "<b>rst_controller</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_modular_adc_control:16.1:analog_input_pin_mask=47,clkdiv=2,device_partname_fivechar_prefix=10M08,dual_adc_mode=false,enable_usr_sim=0,hard_pwd=0,is_this_first_or_second_adc=1,prescalar=0,reference_voltage_sim=59578,refsel=1,simfilename_ch0=,simfilename_ch1=,simfilename_ch10=,simfilename_ch11=,simfilename_ch12=,simfilename_ch13=,simfilename_ch14=,simfilename_ch15=,simfilename_ch16=,simfilename_ch2=,simfilename_ch3=,simfilename_ch4=,simfilename_ch5=,simfilename_ch6=,simfilename_ch7=,simfilename_ch8=,simfilename_ch9=,tsclkdiv=1,tsclksel=1"
+   instancePathKey="adc:.:adc:.:control_internal"
+   kind="altera_modular_adc_control"
+   version="16.1"
+   name="altera_modular_adc_control">
+  <parameter name="is_this_first_or_second_adc" value="1" />
+  <parameter name="device_partname_fivechar_prefix" value="10M08" />
+  <parameter name="dual_adc_mode" value="false" />
+  <parameter name="hard_pwd" value="0" />
+  <parameter name="simfilename_ch6" value="" />
+  <parameter name="simfilename_ch7" value="" />
+  <parameter name="simfilename_ch8" value="" />
+  <parameter name="simfilename_ch9" value="" />
+  <parameter name="simfilename_ch2" value="" />
+  <parameter name="simfilename_ch3" value="" />
+  <parameter name="simfilename_ch4" value="" />
+  <parameter name="simfilename_ch5" value="" />
+  <parameter name="simfilename_ch0" value="" />
+  <parameter name="simfilename_ch1" value="" />
+  <parameter name="refsel" value="1" />
+  <parameter name="prescalar" value="0" />
+  <parameter name="tsclkdiv" value="1" />
+  <parameter name="reference_voltage_sim" value="59578" />
+  <parameter name="enable_usr_sim" value="0" />
+  <parameter name="simfilename_ch15" value="" />
+  <parameter name="simfilename_ch16" value="" />
+  <parameter name="simfilename_ch13" value="" />
+  <parameter name="simfilename_ch14" value="" />
+  <parameter name="simfilename_ch11" value="" />
+  <parameter name="simfilename_ch12" value="" />
+  <parameter name="analog_input_pin_mask" value="47" />
+  <parameter name="simfilename_ch10" value="" />
+  <parameter name="clkdiv" value="2" />
+  <parameter name="tsclksel" value="1" />
+  <generatedFiles>
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control.v"
+       type="VERILOG"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control_avrg_fifo.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control_fsm.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/chsel_code_converter_sw_to_hw.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/fiftyfivenm_adcblock_primitive_wrapper.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/fiftyfivenm_adcblock_top_wrapper.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_control.sdc"
+       type="SDC"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/altera_modular_adc/control/altera_modular_adc_control_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="adc_adc" as="control_internal" />
+  <messages>
+   <message level="Debug" culprit="adc">queue size: 1 starting:altera_modular_adc_control "submodules/altera_modular_adc_control"</message>
+   <message level="Info" culprit="control_internal"><![CDATA["<b>adc</b>" instantiated <b>altera_modular_adc_control</b> "<b>control_internal</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_modular_adc_sequencer:16.1:CSD_LENGTH=5,CSD_SLOT_0=1,CSD_SLOT_0_ADC2=0,CSD_SLOT_1=2,CSD_SLOT_10=0,CSD_SLOT_10_ADC2=0,CSD_SLOT_11=0,CSD_SLOT_11_ADC2=0,CSD_SLOT_12=0,CSD_SLOT_12_ADC2=0,CSD_SLOT_13=0,CSD_SLOT_13_ADC2=0,CSD_SLOT_14=0,CSD_SLOT_14_ADC2=0,CSD_SLOT_15=0,CSD_SLOT_15_ADC2=0,CSD_SLOT_16=0,CSD_SLOT_16_ADC2=0,CSD_SLOT_17=0,CSD_SLOT_17_ADC2=0,CSD_SLOT_18=0,CSD_SLOT_18_ADC2=0,CSD_SLOT_19=0,CSD_SLOT_19_ADC2=0,CSD_SLOT_1_ADC2=0,CSD_SLOT_2=3,CSD_SLOT_20=0,CSD_SLOT_20_ADC2=0,CSD_SLOT_21=0,CSD_SLOT_21_ADC2=0,CSD_SLOT_22=0,CSD_SLOT_22_ADC2=0,CSD_SLOT_23=0,CSD_SLOT_23_ADC2=0,CSD_SLOT_24=0,CSD_SLOT_24_ADC2=0,CSD_SLOT_25=0,CSD_SLOT_25_ADC2=0,CSD_SLOT_26=0,CSD_SLOT_26_ADC2=0,CSD_SLOT_27=0,CSD_SLOT_27_ADC2=0,CSD_SLOT_28=0,CSD_SLOT_28_ADC2=0,CSD_SLOT_29=0,CSD_SLOT_29_ADC2=0,CSD_SLOT_2_ADC2=0,CSD_SLOT_3=4,CSD_SLOT_30=0,CSD_SLOT_30_ADC2=0,CSD_SLOT_31=0,CSD_SLOT_31_ADC2=0,CSD_SLOT_32=0,CSD_SLOT_32_ADC2=0,CSD_SLOT_33=0,CSD_SLOT_33_ADC2=0,CSD_SLOT_34=0,CSD_SLOT_34_ADC2=0,CSD_SLOT_35=0,CSD_SLOT_35_ADC2=0,CSD_SLOT_36=0,CSD_SLOT_36_ADC2=0,CSD_SLOT_37=0,CSD_SLOT_37_ADC2=0,CSD_SLOT_38=0,CSD_SLOT_38_ADC2=0,CSD_SLOT_39=0,CSD_SLOT_39_ADC2=0,CSD_SLOT_3_ADC2=0,CSD_SLOT_4=6,CSD_SLOT_40=0,CSD_SLOT_40_ADC2=0,CSD_SLOT_41=0,CSD_SLOT_41_ADC2=0,CSD_SLOT_42=0,CSD_SLOT_42_ADC2=0,CSD_SLOT_43=0,CSD_SLOT_43_ADC2=0,CSD_SLOT_44=0,CSD_SLOT_44_ADC2=0,CSD_SLOT_45=0,CSD_SLOT_45_ADC2=0,CSD_SLOT_46=0,CSD_SLOT_46_ADC2=0,CSD_SLOT_47=0,CSD_SLOT_47_ADC2=0,CSD_SLOT_48=0,CSD_SLOT_48_ADC2=0,CSD_SLOT_49=0,CSD_SLOT_49_ADC2=0,CSD_SLOT_4_ADC2=0,CSD_SLOT_5=0,CSD_SLOT_50=0,CSD_SLOT_50_ADC2=0,CSD_SLOT_51=0,CSD_SLOT_51_ADC2=0,CSD_SLOT_52=0,CSD_SLOT_52_ADC2=0,CSD_SLOT_53=0,CSD_SLOT_53_ADC2=0,CSD_SLOT_54=0,CSD_SLOT_54_ADC2=0,CSD_SLOT_55=0,CSD_SLOT_55_ADC2=0,CSD_SLOT_56=0,CSD_SLOT_56_ADC2=0,CSD_SLOT_57=0,CSD_SLOT_57_ADC2=0,CSD_SLOT_58=0,CSD_SLOT_58_ADC2=0,CSD_SLOT_59=0,CSD_SLOT_59_ADC2=0,CSD_SLOT_5_ADC2=0,CSD_SLOT_6=0,CSD_SLOT_60=0,CSD_SLOT_60_ADC2=0,CSD_SLOT_61=0,CSD_SLOT_61_ADC2=0,CSD_SLOT_62=0,CSD_SLOT_62_ADC2=0,CSD_SLOT_63=0,CSD_SLOT_63_ADC2=0,CSD_SLOT_6_ADC2=0,CSD_SLOT_7=0,CSD_SLOT_7_ADC2=0,CSD_SLOT_8=0,CSD_SLOT_8_ADC2=0,CSD_SLOT_9=0,CSD_SLOT_9_ADC2=0,DUAL_ADC_MODE=false"
+   instancePathKey="adc:.:adc:.:sequencer_internal"
+   kind="altera_modular_adc_sequencer"
+   version="16.1"
+   name="altera_modular_adc_sequencer">
+  <parameter name="CSD_SLOT_52_ADC2" value="0" />
+  <parameter name="CSD_SLOT_19_ADC2" value="0" />
+  <parameter name="CSD_SLOT_2_ADC2" value="0" />
+  <parameter name="CSD_SLOT_61" value="0" />
+  <parameter name="CSD_SLOT_60" value="0" />
+  <parameter name="CSD_SLOT_63" value="0" />
+  <parameter name="CSD_SLOT_62" value="0" />
+  <parameter name="CSD_SLOT_21_ADC2" value="0" />
+  <parameter name="CSD_SLOT_49_ADC2" value="0" />
+  <parameter name="CSD_SLOT_35_ADC2" value="0" />
+  <parameter name="CSD_SLOT_51_ADC2" value="0" />
+  <parameter name="CSD_SLOT_1_ADC2" value="0" />
+  <parameter name="CSD_SLOT_58" value="0" />
+  <parameter name="CSD_SLOT_57" value="0" />
+  <parameter name="CSD_SLOT_59" value="0" />
+  <parameter name="CSD_SLOT_54" value="0" />
+  <parameter name="CSD_SLOT_53" value="0" />
+  <parameter name="CSD_SLOT_56" value="0" />
+  <parameter name="CSD_SLOT_55" value="0" />
+  <parameter name="CSD_SLOT_50" value="0" />
+  <parameter name="CSD_SLOT_52" value="0" />
+  <parameter name="CSD_SLOT_51" value="0" />
+  <parameter name="CSD_SLOT_22_ADC2" value="0" />
+  <parameter name="CSD_SLOT_33_ADC2" value="0" />
+  <parameter name="CSD_SLOT_36_ADC2" value="0" />
+  <parameter name="CSD_SLOT_17_ADC2" value="0" />
+  <parameter name="CSD_SLOT_55_ADC2" value="0" />
+  <parameter name="CSD_SLOT_16_ADC2" value="0" />
+  <parameter name="CSD_SLOT_10_ADC2" value="0" />
+  <parameter name="CSD_SLOT_32_ADC2" value="0" />
+  <parameter name="CSD_SLOT_54_ADC2" value="0" />
+  <parameter name="CSD_SLOT_38_ADC2" value="0" />
+  <parameter name="CSD_SLOT_4" value="6" />
+  <parameter name="CSD_SLOT_3_ADC2" value="0" />
+  <parameter name="CSD_SLOT_5" value="0" />
+  <parameter name="CSD_SLOT_2" value="3" />
+  <parameter name="CSD_SLOT_0_ADC2" value="0" />
+  <parameter name="CSD_SLOT_3" value="4" />
+  <parameter name="CSD_SLOT_6_ADC2" value="0" />
+  <parameter name="CSD_SLOT_20_ADC2" value="0" />
+  <parameter name="CSD_SLOT_0" value="1" />
+  <parameter name="CSD_SLOT_1" value="2" />
+  <parameter name="CSD_SLOT_48_ADC2" value="0" />
+  <parameter name="CSD_SLOT_23_ADC2" value="0" />
+  <parameter name="CSD_SLOT_42_ADC2" value="0" />
+  <parameter name="CSD_SLOT_45_ADC2" value="0" />
+  <parameter name="CSD_SLOT_26_ADC2" value="0" />
+  <parameter name="CSD_SLOT_29_ADC2" value="0" />
+  <parameter name="DUAL_ADC_MODE" value="false" />
+  <parameter name="CSD_SLOT_9_ADC2" value="0" />
+  <parameter name="CSD_SLOT_29" value="0" />
+  <parameter name="CSD_SLOT_58_ADC2" value="0" />
+  <parameter name="CSD_SLOT_28" value="0" />
+  <parameter name="CSD_SLOT_25" value="0" />
+  <parameter name="CSD_SLOT_24" value="0" />
+  <parameter name="CSD_SLOT_44_ADC2" value="0" />
+  <parameter name="CSD_SLOT_27" value="0" />
+  <parameter name="CSD_SLOT_27_ADC2" value="0" />
+  <parameter name="CSD_SLOT_26" value="0" />
+  <parameter name="CSD_SLOT_21" value="0" />
+  <parameter name="CSD_SLOT_20" value="0" />
+  <parameter name="CSD_SLOT_23" value="0" />
+  <parameter name="CSD_SLOT_22" value="0" />
+  <parameter name="CSD_SLOT_61_ADC2" value="0" />
+  <parameter name="CSD_SLOT_13_ADC2" value="0" />
+  <parameter name="CSD_SLOT_8_ADC2" value="0" />
+  <parameter name="CSD_SLOT_43_ADC2" value="0" />
+  <parameter name="CSD_SLOT_7_ADC2" value="0" />
+  <parameter name="CSD_SLOT_12_ADC2" value="0" />
+  <parameter name="CSD_SLOT_57_ADC2" value="0" />
+  <parameter name="CSD_SLOT_8" value="0" />
+  <parameter name="CSD_SLOT_9" value="0" />
+  <parameter name="CSD_SLOT_6" value="0" />
+  <parameter name="CSD_SLOT_7" value="0" />
+  <parameter name="CSD_SLOT_18" value="0" />
+  <parameter name="CSD_SLOT_17" value="0" />
+  <parameter name="CSD_SLOT_19" value="0" />
+  <parameter name="CSD_SLOT_14" value="0" />
+  <parameter name="CSD_SLOT_13" value="0" />
+  <parameter name="CSD_SLOT_16" value="0" />
+  <parameter name="CSD_SLOT_15" value="0" />
+  <parameter name="CSD_SLOT_10" value="0" />
+  <parameter name="CSD_SLOT_12" value="0" />
+  <parameter name="CSD_SLOT_11" value="0" />
+  <parameter name="CSD_SLOT_28_ADC2" value="0" />
+  <parameter name="CSD_SLOT_14_ADC2" value="0" />
+  <parameter name="CSD_SLOT_39_ADC2" value="0" />
+  <parameter name="CSD_SLOT_11_ADC2" value="0" />
+  <parameter name="CSD_SLOT_60_ADC2" value="0" />
+  <parameter name="CSD_SLOT_30_ADC2" value="0" />
+  <parameter name="CSD_SLOT_25_ADC2" value="0" />
+  <parameter name="CSD_SLOT_41_ADC2" value="0" />
+  <parameter name="CSD_SLOT_47" value="0" />
+  <parameter name="CSD_SLOT_46" value="0" />
+  <parameter name="CSD_SLOT_47_ADC2" value="0" />
+  <parameter name="CSD_SLOT_49" value="0" />
+  <parameter name="CSD_SLOT_48" value="0" />
+  <parameter name="CSD_SLOT_43" value="0" />
+  <parameter name="CSD_SLOT_63_ADC2" value="0" />
+  <parameter name="CSD_SLOT_42" value="0" />
+  <parameter name="CSD_SLOT_45" value="0" />
+  <parameter name="CSD_SLOT_44" value="0" />
+  <parameter name="CSD_SLOT_24_ADC2" value="0" />
+  <parameter name="CSD_SLOT_41" value="0" />
+  <parameter name="CSD_SLOT_40" value="0" />
+  <parameter name="CSD_SLOT_5_ADC2" value="0" />
+  <parameter name="CSD_SLOT_46_ADC2" value="0" />
+  <parameter name="CSD_SLOT_50_ADC2" value="0" />
+  <parameter name="CSD_SLOT_40_ADC2" value="0" />
+  <parameter name="CSD_SLOT_15_ADC2" value="0" />
+  <parameter name="CSD_SLOT_4_ADC2" value="0" />
+  <parameter name="CSD_SLOT_62_ADC2" value="0" />
+  <parameter name="CSD_SLOT_39" value="0" />
+  <parameter name="CSD_SLOT_37_ADC2" value="0" />
+  <parameter name="CSD_SLOT_34_ADC2" value="0" />
+  <parameter name="CSD_SLOT_36" value="0" />
+  <parameter name="CSD_SLOT_31_ADC2" value="0" />
+  <parameter name="CSD_SLOT_35" value="0" />
+  <parameter name="CSD_SLOT_38" value="0" />
+  <parameter name="CSD_SLOT_37" value="0" />
+  <parameter name="CSD_SLOT_32" value="0" />
+  <parameter name="CSD_SLOT_31" value="0" />
+  <parameter name="CSD_SLOT_34" value="0" />
+  <parameter name="CSD_SLOT_33" value="0" />
+  <parameter name="CSD_SLOT_18_ADC2" value="0" />
+  <parameter name="CSD_SLOT_30" value="0" />
+  <parameter name="CSD_SLOT_53_ADC2" value="0" />
+  <parameter name="CSD_SLOT_56_ADC2" value="0" />
+  <parameter name="CSD_LENGTH" value="5" />
+  <parameter name="CSD_SLOT_59_ADC2" value="0" />
+  <generatedFiles>
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer.v"
+       type="VERILOG"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer_csr.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/AERO/AERO_RTF_I2C_ADC/adc/synthesis/submodules/altera_modular_adc_sequencer_ctrl.v"
+       type="VERILOG"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/16.1/ip/altera/altera_modular_adc/sequencer/altera_modular_adc_sequencer_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="adc_adc" as="sequencer_internal" />
+  <messages>
+   <message level="Debug" culprit="adc">queue size: 0 starting:altera_modular_adc_sequencer "submodules/altera_modular_adc_sequencer"</message>
+   <message level="Info" culprit="sequencer_internal"><![CDATA["<b>adc</b>" instantiated <b>altera_modular_adc_sequencer</b> "<b>sequencer_internal</b>"]]></message>
+  </messages>
+ </entity>
+</deploy>

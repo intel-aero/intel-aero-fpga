@@ -1,0 +1,109 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "out_SSCL",
+					"strict" : false
+				},
+				{
+					"name" : "IO_MOTORS_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_MOTORS_SDA_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "IO_GPS_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_GPS_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "IO_REC_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_IO3_REC_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_XBEE_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "CHT_DBG_UART_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "IO_TELEM_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_TELEM_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "inout_SSDA",
+					"strict" : false
+				},
+				{
+					"name" : "inout_MSDA",
+					"strict" : false
+				},
+				{
+					"name" : "in_MSCL",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_MOTORS_SCL_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "IO_MOTORS_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_GPS_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "IO_GPS_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_XBEE_CTS_REC_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "IO_REC_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "CHT_DBG_UART_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_XBEE_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "FC1_TELEM_Tx",
+					"strict" : false
+				},
+				{
+					"name" : "IO_TELEM_Rx",
+					"strict" : false
+				},
+				{
+					"name" : "in_CLK",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

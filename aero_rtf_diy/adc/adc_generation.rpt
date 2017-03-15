@@ -1,0 +1,35 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate C:\AERO\AERO_RTF_I2C_ADC\adc.qsys --block-symbol-file --output-directory=C:\AERO\AERO_RTF_I2C_ADC\adc --family="MAX 10" --part=10M08SAM153I7G
+Progress: Loading AERO_RTF_I2C_ADC/adc.qsys
+Progress: Reading input file
+Progress: Adding adc [altera_modular_adc 16.1]
+Progress: Parameterizing module adc
+Progress: Adding clk_0 [clock_source 16.1]
+Progress: Parameterizing module clk_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate C:\AERO\AERO_RTF_I2C_ADC\adc.qsys --synthesis=VERILOG --output-directory=C:\AERO\AERO_RTF_I2C_ADC\adc\synthesis --family="MAX 10" --part=10M08SAM153I7G
+Progress: Loading AERO_RTF_I2C_ADC/adc.qsys
+Progress: Reading input file
+Progress: Adding adc [altera_modular_adc 16.1]
+Progress: Parameterizing module adc
+Progress: Adding clk_0 [clock_source 16.1]
+Progress: Parameterizing module clk_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: adc: Generating adc "adc" for QUARTUS_SYNTH
+Info: adc: "adc" instantiated altera_modular_adc "adc"
+Info: rst_controller: "adc" instantiated altera_reset_controller "rst_controller"
+Info: control_internal: "adc" instantiated altera_modular_adc_control "control_internal"
+Info: sequencer_internal: "adc" instantiated altera_modular_adc_sequencer "sequencer_internal"
+Info: adc: Done "adc" with 5 modules, 15 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

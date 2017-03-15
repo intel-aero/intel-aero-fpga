@@ -1,0 +1,138 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2016  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel MegaCore Function License Agreement, or other 
+# applicable license agreement, including, without limitation, 
+# that your use is for the sole purpose of programming logic 
+# devices manufactured by Intel and sold by Intel or its 
+# authorized distributors.  Please refer to the applicable 
+# agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+# Date created = 12:28:15  December 09, 2016
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		Top_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "MAX 10"
+set_global_assignment -name DEVICE 10M08SAM153I7G
+set_global_assignment -name TOP_LEVEL_ENTITY Top
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 16.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "12:28:15  DECEMBER 09, 2016"
+set_global_assignment -name LAST_QUARTUS_VERSION 16.0.0
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP "-40"
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
+set_global_assignment -name DEVICE_FILTER_PACKAGE MBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 153
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
+set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+
+## 25MHz clock
+set_location_assignment PIN_J5 -to in_CLK
+
+## AEROFC <-> UART ESC
+set_location_assignment PIN_R2 -to IO_MOTORS_Tx
+set_location_assignment PIN_P1 -to IO_MOTORS_Rx
+set_location_assignment PIN_L8 -to FC1_MOTORS_SCL_Tx
+set_location_assignment PIN_R9 -to FC1_MOTORS_SDA_Rx
+
+## AEROFC <-> CHT UART and Bootloader
+set_location_assignment PIN_R7 -to FC1_XBEE_Rx
+set_location_assignment PIN_P8 -to FC1_XBEE_Tx
+set_location_assignment PIN_B12 -to CHT_DBG_UART_Tx
+set_location_assignment PIN_B11 -to CHT_DBG_UART_Rx
+
+## AEROFC <-> UART GPS
+set_location_assignment PIN_A5 -to IO_GPS_Rx
+set_location_assignment PIN_C8 -to IO_GPS_Tx
+set_location_assignment PIN_L6 -to FC1_GPS_Rx
+set_location_assignment PIN_L7 -to FC1_GPS_Tx
+
+## AEROFC <-> DSM RC
+set_location_assignment PIN_E11 -to IO_REC_Rx
+set_location_assignment PIN_E9 -to IO_REC_Tx
+set_location_assignment PIN_P6 -to FC1_IO3_REC_Rx
+set_location_assignment PIN_M7 -to FC1_XBEE_CTS_REC_Tx
+
+## AEROFC <-> TELEMETRY
+set_location_assignment PIN_L5 -to IO_TELEM_Tx
+set_location_assignment PIN_L4 -to IO_TELEM_Rx
+set_location_assignment PIN_M5 -to FC1_TELEM_Tx
+set_location_assignment PIN_P3 -to FC1_TELEM_Rx
+
+## Booloader force pin
+set_location_assignment PIN_R5 -to BOOTLOADER_FORCE_PIN
+
+## External compass
+set_location_assignment PIN_P9 -to in_MSCL
+set_location_assignment PIN_P7 -to inout_MSDA
+set_location_assignment PIN_D12 -to out_SSCL
+set_location_assignment PIN_A14 -to inout_SSDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to inout_MSDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to inout_SSDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to in_MSCL
+
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to BOOTLOADER_FORCE_PIN
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to in_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to in_MSCL
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to inout_MSDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to inout_SSDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to out_SSCL
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CHT_DBG_UART_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CHT_DBG_UART_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_GPS_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_GPS_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_IO3_REC_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_MOTORS_SCL_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_MOTORS_SDA_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_CTS_REC_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_GPS_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_GPS_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_MOTORS_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_MOTORS_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_REC_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_REC_Tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_Rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_Tx
+
+
+
+set_global_assignment -name VERILOG_FILE RTL/top.v
+set_global_assignment -name VERILOG_FILE RTL/pwm.v
+set_global_assignment -name QIP_FILE adc/synthesis/adc.qip
+set_global_assignment -name QIP_FILE pll/pll.qip
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
