@@ -40,34 +40,46 @@ module Top (
         inout_SSDA,
         inout_MSDA,
 
-        // gpios
+        // UART motors
         IO_MOTORS_Tx,
         IO_MOTORS_Rx,
         FC1_MOTORS_SCL_Tx,
         FC1_MOTORS_SDA_Rx,
 
+        // UART GPS
         IO_GPS_Tx,
         IO_GPS_Rx,
         FC1_GPS_Tx,
         FC1_GPS_Rx,
 
+        // UART RC receiver
         IO_REC_Rx,
         IO_REC_Tx,
         FC1_IO3_REC_Rx,
         FC1_XBEE_CTS_REC_Tx,
 
+        // UART CHT<>FC
         FC1_XBEE_Rx,
         FC1_XBEE_Tx,
         CHT_DBG_UART_Tx,
         CHT_DBG_UART_Rx,
 
+        // UART telemetry
         IO_TELEM_Tx,
         IO_TELEM_Rx,
         FC1_TELEM_Tx,
         FC1_TELEM_Rx,
 
+        // SPI CHT
+        SPI_SCLK,
+        SPI_MISO,
+        SPI_MOSI,
+        SPI_SS,
+
         BOOTLOADER_FORCE_PIN
 );
+
+parameter fpga_ver = 8'hC0;
 
 // global
 input wire in_CLK;
@@ -102,6 +114,11 @@ output wire IO_TELEM_Tx;
 input  wire IO_TELEM_Rx;
 input  wire FC1_TELEM_Tx;
 output wire FC1_TELEM_Rx;
+
+input wire SPI_SCLK;
+output wire SPI_MISO;
+input wire SPI_MOSI;
+input wire SPI_SS;
 
 output reg BOOTLOADER_FORCE_PIN = 0;
 
@@ -454,5 +471,76 @@ assign adc_txd =  adc_cs && adc_rd_wr && ~ack_on; // && clk_negedge;
 
 assign slave_wr = (~addr_set && ack_on)  || (ack_on && ~rd_wr) || (rd_wr && addr_set && ~ack_on);
 assign master_wr = ~slave_wr;
+
+// SPI
+
+wire spi_rx_byte_available;
+wire [7 : 0] spi_rx_byte;
+wire spi_tx_ready_to_write;
+reg [7 : 0] spi_tx_byte;
+
+// SPI state machine
+reg [7 : 0] tx_byte_buffer = 0;
+reg waiting_reg = 0;
+reg [1 :0] spi_rx_byte_available_reg;
+reg [1 :0] spi_tx_ready_to_write_reg;
+reg [1 :0] ss_reg;
+wire spi_rx_byte_available_rissing_edge;
+wire spi_tx_ready_to_write_rissing_edge;
+wire ss_falling_edge;
+
+spi_slave spi0_inst(
+    .clk(in_CLK),
+    .sclk(SPI_SCLK),
+    .miso(SPI_MISO),
+    .mosi(SPI_MOSI),
+    .ss(SPI_SS),
+    .rx_byte_available(spi_rx_byte_available),
+    .rx_byte(spi_rx_byte),
+    .tx_byte_ready_to_write(spi_tx_ready_to_write),
+    .tx_byte(spi_tx_byte)
+);
+
+assign spi_rx_byte_available_rissing_edge = (spi_rx_byte_available_reg == 2'b01);
+assign spi_tx_ready_to_write_rissing_edge = (spi_tx_ready_to_write_reg == 2'b01);
+assign ss_falling_edge = (ss_reg == 2'b10);
+
+// helper to detect edges
+always @ (posedge in_CLK) begin
+    spi_rx_byte_available_reg[0] <= spi_rx_byte_available;
+    spi_rx_byte_available_reg[1] <= spi_rx_byte_available_reg[0];
+
+    spi_tx_ready_to_write_reg[0] <= spi_tx_ready_to_write;
+    spi_tx_ready_to_write_reg[1] <= spi_tx_ready_to_write_reg[0];
+
+    ss_reg[0] <= SPI_SS;
+    ss_reg[1] <= ss_reg[0];
+end
+
+// copy byte to be transmitted to SPI
+always @ (posedge in_CLK) begin
+    if (spi_tx_ready_to_write_rissing_edge) begin
+        spi_tx_byte <= tx_byte_buffer;
+    end
+end
+
+parameter fpga_ver_read_reg = 8'd0;
+
+// SPI state machine
+always @ (posedge in_CLK) begin
+    if (ss_falling_edge) begin
+        waiting_reg <= 1;
+        tx_byte_buffer <= 0;
+    end else if (spi_rx_byte_available_rissing_edge) begin
+        if (waiting_reg) begin
+            waiting_reg <= 0;
+
+            if (spi_rx_byte == fpga_ver_read_reg) begin
+                // read FPGA version, write 1 byte with the version
+                tx_byte_buffer <= fpga_ver;
+            end
+        end
+    end
+end
 
 endmodule
