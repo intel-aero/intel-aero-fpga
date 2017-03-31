@@ -52,6 +52,7 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
 set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
 set_global_assignment -name VERILOG_FILE RTL/top.v
+set_global_assignment -name VERILOG_FILE RTL/spi_slave.v
 set_global_assignment -name QIP_FILE adc/synthesis/adc.qip
 set_global_assignment -name QIP_FILE pll/pll.qip
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
@@ -103,6 +104,15 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to inout_MSDA
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to inout_SSDA
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to in_MSCL
 
+## SPI pins
+set_location_assignment PIN_H12 -to SPI_SCLK
+set_location_assignment PIN_J12 -to SPI_MOSI
+set_location_assignment PIN_H11 -to SPI_MISO
+set_location_assignment PIN_H13 -to SPI_SS
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_SCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_MOSI
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_MISO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_SS
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to BOOTLOADER_FORCE_PIN
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to in_CLK
