@@ -76,6 +76,10 @@ module Top (
         SPI_MOSI,
         SPI_SS,
 
+        // Telemetry I2C
+        IO_TELEM_I2C_CLK,
+        IO_TELEM_I2C_SDA,
+
         BOOTLOADER_FORCE_PIN
 );
 
@@ -119,6 +123,9 @@ input wire SPI_SCLK;
 output wire SPI_MISO;
 input wire SPI_MOSI;
 input wire SPI_SS;
+
+output wire IO_TELEM_I2C_CLK;
+inout wire IO_TELEM_I2C_SDA;
 
 output reg BOOTLOADER_FORCE_PIN = 0;
 
@@ -308,10 +315,16 @@ reg [3:0] adc_addr;
 reg [3:0] i2c_reg_addr;
 reg adc_wr_set;
 reg i2c_reset;
+wire i2c_slaves_sda;
 
 assign IO_COMPASS_CLK = FC1_I2C_CLK;
+assign IO_TELEM_I2C_CLK = FC1_I2C_CLK;
+
+assign IO_TELEM_I2C_SDA = (master_wr) ? FC1_I2C_SDA: 1'bz;
 assign IO_COMPASS_SDA = (master_wr) ? FC1_I2C_SDA: 1'bz;
-assign FC1_I2C_SDA = ((adc_ack || adc_txd) && ~i2c_reset) ? adc_sda: (slave_wr) ? IO_COMPASS_SDA:  1'bz;
+
+assign i2c_slaves_sda = IO_COMPASS_SDA ? IO_TELEM_I2C_SDA : IO_COMPASS_SDA;
+assign FC1_I2C_SDA = ((adc_ack || adc_txd) && ~i2c_reset) ? adc_sda: (slave_wr) ? i2c_slaves_sda:  1'bz;
 
 wire ack_on;
 assign ack_on = (bit_count == 4'h9)? 1'b1: 1'b0;
