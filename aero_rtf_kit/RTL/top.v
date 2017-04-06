@@ -35,10 +35,10 @@ module Top (
         in_CLK,
 
         // i2c
-        in_MSCL,
-        out_SSCL,
-        inout_SSDA,
-        inout_MSDA,
+        FC1_I2C_CLK,
+        IO_COMPASS_CLK,
+        IO_COMPASS_SDA,
+        FC1_I2C_SDA,
 
         // UART motors
         IO_MOTORS_Tx,
@@ -85,10 +85,10 @@ parameter fpga_ver = 8'hC0;
 input wire in_CLK;
 
 // i2c
-input wire in_MSCL;
-output wire out_SSCL;
-inout wire inout_SSDA;
-inout wire inout_MSDA;
+input wire FC1_I2C_CLK;
+output wire IO_COMPASS_CLK;
+inout wire IO_COMPASS_SDA;
+inout wire FC1_I2C_SDA;
 
 output wire IO_MOTORS_Tx;
 input  wire IO_MOTORS_Rx;
@@ -309,9 +309,9 @@ reg [3:0] i2c_reg_addr;
 reg adc_wr_set;
 reg i2c_reset;
 
-assign out_SSCL = in_MSCL;
-assign inout_SSDA = (master_wr)? inout_MSDA: 1'bz;
-assign inout_MSDA = ((adc_ack || adc_txd) && ~i2c_reset)? adc_sda: (slave_wr)? inout_SSDA:  1'bz;
+assign IO_COMPASS_CLK = FC1_I2C_CLK;
+assign IO_COMPASS_SDA = (master_wr) ? FC1_I2C_SDA: 1'bz;
+assign FC1_I2C_SDA = ((adc_ack || adc_txd) && ~i2c_reset) ? adc_sda: (slave_wr) ? IO_COMPASS_SDA:  1'bz;
 
 wire ack_on;
 assign ack_on = (bit_count == 4'h9)? 1'b1: 1'b0;
@@ -320,8 +320,8 @@ reg [1:0] r_msda;
 reg [1:0] r_mscl;
 
 always @(posedge clk_core) begin
-   r_msda <= {r_msda[0], inout_MSDA};
-   r_mscl <= {r_mscl[0], in_MSCL};
+   r_msda <= {r_msda[0], FC1_I2C_SDA};
+   r_mscl <= {r_mscl[0], FC1_I2C_CLK};
 end
 
 always @(posedge clk_core) begin
@@ -398,7 +398,7 @@ always @(posedge clk_core or negedge reset_n) begin
         end else
            i2c_passon <= 1'b1;
     end else if((~addr_set || ~adc_rd_wr)  && clk_posedge && i2c_busy && ~i2c_passon && ~ack_on)
-       slave_addr <= {slave_addr[6:0], inout_MSDA};
+       slave_addr <= {slave_addr[6:0], FC1_I2C_SDA};
     else if(adc_cs && ~adc_rd_wr && addr_set && ack_on && clk_posedge) begin
         if ( ~adc_addr_set) begin
             adc_addr_set <= 1'b1;
@@ -461,7 +461,7 @@ always @(posedge clk_core or negedge reset_n)
 begin
    if (~reset_n)
        i2c_reset <= 1'b0;
-   else if(ack_on && clk_posedge && inout_MSDA)
+   else if(ack_on && clk_posedge && FC1_I2C_SDA)
        i2c_reset <= 1'b1;
    else if (i2c_start || i2c_stop)
        i2c_reset <= 1'b0;

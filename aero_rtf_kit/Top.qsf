@@ -96,13 +96,13 @@ set_location_assignment PIN_P3 -to FC1_TELEM_Rx
 set_location_assignment PIN_R5 -to BOOTLOADER_FORCE_PIN
 
 ## External compass
-set_location_assignment PIN_P9 -to in_MSCL
-set_location_assignment PIN_P7 -to inout_MSDA
-set_location_assignment PIN_D12 -to out_SSCL
-set_location_assignment PIN_A14 -to inout_SSDA
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to inout_MSDA
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to inout_SSDA
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to in_MSCL
+set_location_assignment PIN_P9 -to FC1_I2C_CLK
+set_location_assignment PIN_P7 -to FC1_I2C_SDA
+set_location_assignment PIN_D12 -to IO_COMPASS_CLK
+set_location_assignment PIN_A14 -to IO_COMPASS_SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_I2C_SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IO_COMPASS_SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_I2C_CLK
 
 ## SPI pins
 set_location_assignment PIN_H12 -to SPI_SCLK
@@ -116,10 +116,10 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_SS
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to BOOTLOADER_FORCE_PIN
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to in_CLK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to in_MSCL
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to inout_MSDA
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to inout_SSDA
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to out_SSCL
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_I2C_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_I2C_SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_COMPASS_SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_COMPASS_CLK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CHT_DBG_UART_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CHT_DBG_UART_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_GPS_Rx
