@@ -77,8 +77,8 @@ set_location_assignment PIN_B11 -to CHT_DBG_UART_Rx
 ## AEROFC <-> UART GPS
 set_location_assignment PIN_A5 -to IO_GPS_Rx
 set_location_assignment PIN_C8 -to IO_GPS_Tx
-set_location_assignment PIN_L6 -to FC1_GPS_Rx
-set_location_assignment PIN_L7 -to FC1_GPS_Tx
+set_location_assignment PIN_R13 -to FC1_GPS_Rx
+set_location_assignment PIN_K2 -to FC1_GPS_Tx
 
 ## AEROFC <-> DSM RC
 set_location_assignment PIN_E11 -to IO_REC_Rx
