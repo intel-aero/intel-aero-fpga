@@ -499,6 +499,7 @@ reg [7 : 0] spi_tx_byte;
 // SPI state machine
 reg [7 : 0] tx_byte_buffer = 0;
 reg waiting_reg = 0;
+reg [7 : 0] reg_received = 0;
 reg [1 :0] spi_rx_byte_available_reg;
 reg [1 :0] spi_tx_ready_to_write_reg;
 reg [1 :0] ss_reg;
@@ -541,7 +542,18 @@ always @ (posedge in_CLK) begin
     end
 end
 
-parameter fpga_ver_read_reg = 8'd0;
+// to keep it compatible with read version operation the 7bit of first byte will
+// be used this way:
+// - set to 0 for read
+// - set to 1 for write
+// Here the current register table:
+// 0x00 - read FPGA firmware version
+// 0x80 - do nothing
+// 0x01 - read the value of BOOTLOADER_FORCE_PIN
+// 0x81 - write the value of BOOTLOADER_FORCE_PIN
+
+parameter fpga_ver_read_reg = 7'd0;
+parameter fpga_bootloader_pin_reg = 7'd1;
 
 // SPI state machine
 always @ (posedge in_CLK) begin
@@ -551,10 +563,24 @@ always @ (posedge in_CLK) begin
     end else if (spi_rx_byte_available_rissing_edge) begin
         if (waiting_reg) begin
             waiting_reg <= 0;
+            reg_received <= spi_rx_byte;
 
-            if (spi_rx_byte == fpga_ver_read_reg) begin
-                // read FPGA version, write 1 byte with the version
-                tx_byte_buffer <= fpga_ver;
+            // is a read operation?
+            if (spi_rx_byte[7] == 0) begin
+                if (spi_rx_byte[6:0] == fpga_ver_read_reg) begin
+                    // read FPGA version, write 1 byte with the version
+                    tx_byte_buffer <= fpga_ver;
+                end
+                if (spi_rx_byte[6:0] == fpga_bootloader_pin_reg) begin
+                    tx_byte_buffer[0] <= BOOTLOADER_FORCE_PIN;
+                end
+            end
+        end else begin
+            // is a write operation?
+            if (reg_received[7] == 1) begin
+                if (reg_received[6:0] == fpga_bootloader_pin_reg) begin
+                    BOOTLOADER_FORCE_PIN <= spi_rx_byte[0];
+                end
             end
         end
     end
