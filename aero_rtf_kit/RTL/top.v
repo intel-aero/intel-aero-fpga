@@ -505,7 +505,7 @@ wire spi_rx_byte_available_rissing_edge;
 wire ss_falling_edge;
 
 spi_slave spi0_inst(
-    .clk(in_CLK),
+    .clk(clk_core),
     .sclk(SPI_SCLK),
     .miso(SPI_MISO),
     .mosi(SPI_MOSI),
@@ -520,7 +520,7 @@ assign spi_rx_byte_available_rissing_edge = (spi_rx_byte_available_reg == 2'b01)
 assign ss_falling_edge = (ss_reg == 2'b10);
 
 // helper to detect edges
-always @ (posedge in_CLK) begin
+always @ (posedge clk_core) begin
     spi_rx_byte_available_reg[0] <= spi_rx_byte_available;
     spi_rx_byte_available_reg[1] <= spi_rx_byte_available_reg[0];
 
@@ -548,7 +548,7 @@ parameter fpga_ver_read_reg = 7'd0;
 parameter fpga_bootloader_pin_reg = 7'd1;
 
 // SPI state machine
-always @ (posedge in_CLK) begin
+always @ (posedge clk_core) begin
     if (ss_falling_edge) begin
         waiting_reg <= 1;
         spi_tx_byte <= 0;
