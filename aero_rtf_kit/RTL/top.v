@@ -500,9 +500,8 @@ reg [7 : 0] spi_tx_byte;
 reg waiting_reg = 0;
 reg [7 : 0] reg_received = 0;
 reg [1 :0] spi_rx_byte_available_reg;
-reg [1 :0] ss_reg;
 wire spi_rx_byte_available_rissing_edge;
-wire ss_falling_edge;
+wire spi_transaction_begin;
 
 spi_slave spi0_inst(
     .clk(clk_core),
@@ -513,19 +512,16 @@ spi_slave spi0_inst(
     .rx_byte_available(spi_rx_byte_available),
     .rx_byte(spi_rx_byte),
     .tx_byte_ready_to_write(spi_tx_ready_to_write),
-    .tx_byte(spi_tx_byte)
+    .tx_byte(spi_tx_byte),
+    .transaction_begin(spi_transaction_begin)
 );
 
 assign spi_rx_byte_available_rissing_edge = (spi_rx_byte_available_reg == 2'b01);
-assign ss_falling_edge = (ss_reg == 2'b10);
 
 // helper to detect edges
 always @ (posedge clk_core) begin
     spi_rx_byte_available_reg[0] <= spi_rx_byte_available;
     spi_rx_byte_available_reg[1] <= spi_rx_byte_available_reg[0];
-
-    ss_reg[0] <= SPI_SS;
-    ss_reg[1] <= ss_reg[0];
 end
 
 // to keep it compatible with read version operation the 8th bit of first byte
@@ -549,7 +545,7 @@ parameter fpga_bootloader_pin_reg = 7'd1;
 
 // SPI state machine
 always @ (posedge clk_core) begin
-    if (ss_falling_edge) begin
+    if (spi_transaction_begin) begin
         waiting_reg <= 1;
         spi_tx_byte <= 0;
     end else if (spi_rx_byte_available_rissing_edge) begin

@@ -6,6 +6,8 @@
 // fitness for a particular purpose, are specifically disclaimed.
 // ----------------------------------------------------------------------------
 
+// Implementation of SPI slave mode 0
+
 module spi_slave(
     clk,
     sclk,
@@ -15,7 +17,8 @@ module spi_slave(
     rx_byte_available,
     rx_byte,
     tx_byte_ready_to_write,
-    tx_byte
+    tx_byte,
+    transaction_begin
 );
 
 input wire clk;
@@ -31,6 +34,8 @@ output reg miso = 1'b0;
 output reg tx_byte_ready_to_write = 1'b0;
 input wire [0 : 7] tx_byte;
 reg [2 : 0] tx_index = 3'd0;
+
+output reg transaction_begin = 0;
 
 reg [1 :0] sclk_reg;
 reg [1 :0] ss_reg;
@@ -48,6 +53,8 @@ always @ (posedge clk) begin
 
     ss_reg[0] <= ss;
     ss_reg[1] <= ss_reg[0];
+
+    transaction_begin <= ss_falling_edge;
 end
 
 // RX
@@ -70,6 +77,7 @@ end
 always @ (posedge clk) begin
     if (ss_falling_edge) begin
         /*
+         * As in mode 0, the sclk is low when the spi slave is selected:
          * tx_index <= 3'd1 because the 7th bit of the first byte is not
          * transmitted in this implementation.
          */
