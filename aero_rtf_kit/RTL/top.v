@@ -542,15 +542,21 @@ always @ (posedge in_CLK) begin
     end
 end
 
-// to keep it compatible with read version operation the 7bit of first byte will
-// be used this way:
+// to keep it compatible with read version operation the 8th bit of first byte
+// will be used this way:
 // - set to 0 for read
 // - set to 1 for write
-// Here the current register table:
-// 0x00 - read FPGA firmware version
-// 0x80 - do nothing
-// 0x01 - read the value of BOOTLOADER_FORCE_PIN
-// 0x81 - write the value of BOOTLOADER_FORCE_PIN
+//
+// This has to be ORed with the register in the table below according to the
+// operation. Bellow is the current register table (using 7bit register addressing).
+// All other registers are reserved for future use.
+//
+// ------------------------------------------------------------------------------------
+// | Reg  | Name             | Mode | Description                                     |
+// |----------------------------------------------------------------------------------|
+// | 0x00 | FPGA_FW_VERSION  |  RO  | FPGA firmware version                           |
+// | 0x01 | AEROFC_FORCE_BT  |  RW  | Pin state to force aerofc to stay on bootloader |
+// ------------------------------------------------------------------------------------
 
 parameter fpga_ver_read_reg = 7'd0;
 parameter fpga_bootloader_pin_reg = 7'd1;
