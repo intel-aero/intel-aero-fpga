@@ -497,18 +497,14 @@ wire spi_tx_ready_to_write;
 reg [7 : 0] spi_tx_byte;
 
 // SPI state machine
-reg [7 : 0] tx_byte_buffer = 0;
 reg waiting_reg = 0;
 reg [7 : 0] reg_received = 0;
 reg [1 :0] spi_rx_byte_available_reg;
-reg [1 :0] spi_tx_ready_to_write_reg;
-reg [1 :0] ss_reg;
 wire spi_rx_byte_available_rissing_edge;
-wire spi_tx_ready_to_write_rissing_edge;
-wire ss_falling_edge;
+wire spi_transaction_begin;
 
 spi_slave spi0_inst(
-    .clk(in_CLK),
+    .clk(clk_core),
     .sclk(SPI_SCLK),
     .miso(SPI_MISO),
     .mosi(SPI_MOSI),
@@ -516,30 +512,16 @@ spi_slave spi0_inst(
     .rx_byte_available(spi_rx_byte_available),
     .rx_byte(spi_rx_byte),
     .tx_byte_ready_to_write(spi_tx_ready_to_write),
-    .tx_byte(spi_tx_byte)
+    .tx_byte(spi_tx_byte),
+    .transaction_begin(spi_transaction_begin)
 );
 
 assign spi_rx_byte_available_rissing_edge = (spi_rx_byte_available_reg == 2'b01);
-assign spi_tx_ready_to_write_rissing_edge = (spi_tx_ready_to_write_reg == 2'b01);
-assign ss_falling_edge = (ss_reg == 2'b10);
 
 // helper to detect edges
-always @ (posedge in_CLK) begin
+always @ (posedge clk_core) begin
     spi_rx_byte_available_reg[0] <= spi_rx_byte_available;
     spi_rx_byte_available_reg[1] <= spi_rx_byte_available_reg[0];
-
-    spi_tx_ready_to_write_reg[0] <= spi_tx_ready_to_write;
-    spi_tx_ready_to_write_reg[1] <= spi_tx_ready_to_write_reg[0];
-
-    ss_reg[0] <= SPI_SS;
-    ss_reg[1] <= ss_reg[0];
-end
-
-// copy byte to be transmitted to SPI
-always @ (posedge in_CLK) begin
-    if (spi_tx_ready_to_write_rissing_edge) begin
-        spi_tx_byte <= tx_byte_buffer;
-    end
 end
 
 // to keep it compatible with read version operation the 8th bit of first byte
@@ -562,10 +544,10 @@ parameter fpga_ver_read_reg = 7'd0;
 parameter fpga_bootloader_pin_reg = 7'd1;
 
 // SPI state machine
-always @ (posedge in_CLK) begin
-    if (ss_falling_edge) begin
+always @ (posedge clk_core) begin
+    if (spi_transaction_begin) begin
         waiting_reg <= 1;
-        tx_byte_buffer <= 0;
+        spi_tx_byte <= 0;
     end else if (spi_rx_byte_available_rissing_edge) begin
         if (waiting_reg) begin
             waiting_reg <= 0;
@@ -575,10 +557,10 @@ always @ (posedge in_CLK) begin
             if (spi_rx_byte[7] == 0) begin
                 if (spi_rx_byte[6:0] == fpga_ver_read_reg) begin
                     // read FPGA version, write 1 byte with the version
-                    tx_byte_buffer <= fpga_ver;
+                    spi_tx_byte <= fpga_ver;
                 end
                 if (spi_rx_byte[6:0] == fpga_bootloader_pin_reg) begin
-                    tx_byte_buffer[0] <= BOOTLOADER_FORCE_PIN;
+                    spi_tx_byte[0] <= BOOTLOADER_FORCE_PIN;
                 end
             end
         end else begin
