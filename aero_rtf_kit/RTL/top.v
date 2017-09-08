@@ -34,13 +34,9 @@ module Top (
         // global
         in_CLK,
 
-        // Shared I2C(ADC and external)
+        // Shared I2C(external compass and ADC)
         FC1_I2C_CLK,
         FC1_I2C_SDA,
-
-        // I2C external compass
-        FC1_COMPASS_CLK,
-        FC1_COMPASS_SDA,
         IO_COMPASS_CLK,
         IO_COMPASS_SDA,
 
@@ -80,10 +76,6 @@ module Top (
         SPI_MOSI,
         SPI_SS,
 
-        // Telemetry I2C
-        IO_TELEM_I2C_CLK,
-        IO_TELEM_I2C_SDA,
-
         BOOTLOADER_FORCE_PIN
 );
 
@@ -99,8 +91,6 @@ inout wire FC1_I2C_SDA;
 // External compass I2C
 output wire IO_COMPASS_CLK;
 inout wire IO_COMPASS_SDA;
-input wire FC1_COMPASS_CLK;
-inout wire FC1_COMPASS_SDA;
 
 output wire IO_MOTORS_Tx;
 input  wire IO_MOTORS_Rx;
@@ -131,9 +121,6 @@ input wire SPI_SCLK;
 output wire SPI_MISO;
 input wire SPI_MOSI;
 input wire SPI_SS;
-
-output wire IO_TELEM_I2C_CLK;
-inout wire IO_TELEM_I2C_SDA;
 
 output reg BOOTLOADER_FORCE_PIN = 0;
 
@@ -324,11 +311,11 @@ reg [3:0] i2c_reg_addr;
 reg adc_wr_set;
 reg i2c_reset;
 
-assign IO_TELEM_I2C_CLK = FC1_I2C_CLK;
+assign IO_COMPASS_CLK = FC1_I2C_CLK;
 
-assign IO_TELEM_I2C_SDA = (master_wr) ? FC1_I2C_SDA: 1'bz;
+assign IO_COMPASS_SDA = (master_wr) ? FC1_I2C_SDA: 1'bz;
 
-assign FC1_I2C_SDA = ((adc_ack || adc_txd) && ~i2c_reset) ? adc_sda: (slave_wr) ? IO_TELEM_I2C_SDA:  1'bz;
+assign FC1_I2C_SDA = ((adc_ack || adc_txd) && ~i2c_reset) ? adc_sda: (slave_wr) ? IO_COMPASS_SDA:  1'bz;
 
 wire ack_on;
 assign ack_on = (bit_count == 4'h9)? 1'b1: 1'b0;
@@ -573,14 +560,5 @@ always @ (posedge clk_core) begin
         end
     end
 end
-
-// I2C bridge external compass
-i2c_bridge i2c_external_compass_bridge_inst(
-        .CLK(clk_core),
-        .MSDA(FC1_COMPASS_SDA),
-        .MSCL(FC1_COMPASS_CLK),
-        .SSDA(IO_COMPASS_SDA),
-        .SSCL(IO_COMPASS_CLK)
-);
 
 endmodule
