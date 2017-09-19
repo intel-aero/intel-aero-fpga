@@ -90,8 +90,8 @@ set_location_assignment PIN_M7 -to FC1_XBEE_CTS_REC_Tx
 ## AEROFC <-> TELEMETRY
 set_location_assignment PIN_L5 -to IO_TELEM_Tx
 set_location_assignment PIN_L4 -to IO_TELEM_Rx
-set_location_assignment PIN_M5 -to FC1_TELEM_Tx
-set_location_assignment PIN_P3 -to FC1_TELEM_Rx
+set_location_assignment PIN_L7 -to FC1_TELEM_Tx
+set_location_assignment PIN_L6 -to FC1_TELEM_Rx
 
 ## Booloader force pin
 set_location_assignment PIN_R5 -to BOOTLOADER_FORCE_PIN
