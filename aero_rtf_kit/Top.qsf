@@ -118,6 +118,16 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_MOSI
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_MISO
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_SS
 
+## AEROFC SDIO
+set_location_assignment PIN_M5 -to SDIO_CK
+set_location_assignment PIN_M4 -to SDIO_D0
+set_location_assignment PIN_P3 -to SDIO_CMD
+set_location_assignment PIN_R3 -to SDIO_CD
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_CK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_D0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_CMD
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_CD
+
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to BOOTLOADER_FORCE_PIN
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to in_CLK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_I2C_CLK

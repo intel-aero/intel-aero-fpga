@@ -58,7 +58,13 @@ module Top (
         SPI_MOSI,
         SPI_SS,
 
-        BOOTLOADER_FORCE_PIN
+        BOOTLOADER_FORCE_PIN,
+
+        // SDCARD FC
+        SDIO_CK,
+        SDIO_D0,
+        SDIO_CMD,
+        SDIO_CD
 );
 
 parameter fpga_ver = 8'hC2;
@@ -105,6 +111,11 @@ input wire SPI_MOSI;
 input wire SPI_SS;
 
 output reg BOOTLOADER_FORCE_PIN = 0;
+
+output wire SDIO_CK = 1'bz;
+output wire SDIO_D0 = 1'bz;
+output wire SDIO_CMD = 1'bz;
+output wire SDIO_CD = 1'bz;
 
 assign FC1_MOTORS_SDA_Rx = IO_MOTORS_Rx;
 assign IO_MOTORS_Tx = FC1_MOTORS_SCL_Tx;
