@@ -64,11 +64,14 @@ module Top (
         CHT_DBG_UART_Tx,
         CHT_DBG_UART_Rx,
 
-        // UART telemetry
-        IO_TELEM_Tx,
-        IO_TELEM_Rx,
-        FC1_TELEM_Tx,
-        FC1_TELEM_Rx,
+        // Telemetry UART or I2C
+        IO_TELEM_UART_TX,
+        IO_TELEM_UART_RX,
+        IO_TELEM_I2C_CLK,
+        IO_TELEM_I2C_SDA,
+        FC1_TELEM_UART_TX_I2C_CLK,
+        FC1_TELEM_UART_RX_I2C_SDA,
+        FC_TELEM_UART_I2C_SELECTOR,
 
         // SPI CHT
         SPI_SCLK,
@@ -118,10 +121,27 @@ output wire FC1_XBEE_Rx;
 input  wire CHT_DBG_UART_Tx;
 output wire CHT_DBG_UART_Rx;
 
-output wire IO_TELEM_Tx;
-input  wire IO_TELEM_Rx;
-input  wire FC1_TELEM_Tx;
-output wire FC1_TELEM_Rx;
+// Telemetry UART or I2C
+output wire IO_TELEM_UART_TX;
+input wire IO_TELEM_UART_RX;
+output wire IO_TELEM_I2C_CLK;
+inout wire IO_TELEM_I2C_SDA;
+input wire FC1_TELEM_UART_TX_I2C_CLK;
+inout wire FC1_TELEM_UART_RX_I2C_SDA;
+input wire FC_TELEM_UART_I2C_SELECTOR;
+
+// Telemetry UART
+assign FC1_TELEM_UART_RX_I2C_SDA = FC_TELEM_UART_I2C_SELECTOR == 0 ? IO_TELEM_UART_RX : 1'bz;
+assign IO_TELEM_UART_TX = FC_TELEM_UART_I2C_SELECTOR == 0 ? FC1_TELEM_UART_TX_I2C_CLK : 0;
+
+// Telemetry I2C bridge
+i2c_bridge i2c_external_compass_bridge_inst(
+        .CLK(clk_core),
+        .MSDA(FC1_TELEM_UART_RX_I2C_SDA),
+        .MSCL(FC1_TELEM_UART_TX_I2C_CLK),
+        .SSDA(IO_TELEM_I2C_SDA),
+        .SSCL(IO_TELEM_I2C_CLK)
+);
 
 input wire SPI_SCLK;
 output wire SPI_MISO;
@@ -143,8 +163,6 @@ assign IO_REC_Tx = FC1_XBEE_CTS_REC_Tx;
 assign FC1_IO3_REC_Rx = IO_REC_Rx;
 assign CHT_DBG_UART_Rx = FC1_XBEE_Tx;
 assign FC1_XBEE_Rx = CHT_DBG_UART_Tx;
-assign FC1_TELEM_Rx = IO_TELEM_Rx;
-assign IO_TELEM_Tx = FC1_TELEM_Tx;
 
 //--------------------------
 // Regs and Wires
