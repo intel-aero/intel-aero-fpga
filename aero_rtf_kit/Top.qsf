@@ -54,6 +54,7 @@ set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
 set_global_assignment -name VERILOG_FILE RTL/top.v
 set_global_assignment -name VERILOG_FILE RTL/spi_slave.v
 set_global_assignment -name VERILOG_FILE RTL/i2c_bridge.v
+set_global_assignment -name VERILOG_FILE RTL/i2c_slave.v
 set_global_assignment -name QIP_FILE adc/synthesis/adc.qip
 set_global_assignment -name QIP_FILE pll/pll.qip
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
