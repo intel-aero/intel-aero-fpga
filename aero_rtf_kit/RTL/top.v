@@ -105,6 +105,10 @@ input  wire IO_TELEM_Rx;
 input  wire FC1_TELEM_Tx;
 output wire FC1_TELEM_Rx;
 
+// FC configurations
+wire [7 : 0] uart_inverted;
+wire [7 : 0] telemetry_con_sel;
+
 input wire SPI_SCLK;
 output wire SPI_MISO;
 input wire SPI_MOSI;
@@ -178,6 +182,15 @@ adc_state_machine adc_inst(
     .i2c_sda(FC1_I2C_SDA),
     .reset_n(reset_n),
     .locked(locked)
+);
+
+fc_config fc_config_inst(
+    .clk_core(clk_core),
+    .i2c_clk(FC1_I2C_CLK),
+    .i2c_sda(FC1_I2C_SDA),
+    .fpga_firmware_version(fpga_ver),
+    .uart_inverted(uart_inverted),
+    .telemetry_con_sel(telemetry_con_sel)
 );
 
 // SPI

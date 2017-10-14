@@ -56,6 +56,7 @@ set_global_assignment -name VERILOG_FILE RTL/spi_slave.v
 set_global_assignment -name VERILOG_FILE RTL/i2c_bridge_new.v
 set_global_assignment -name VERILOG_FILE RTL/i2c_slave.v
 set_global_assignment -name VERILOG_FILE RTL/adc.v
+set_global_assignment -name VERILOG_FILE RTL/fc_config.v
 set_global_assignment -name QIP_FILE adc/synthesis/adc.qip
 set_global_assignment -name QIP_FILE pll/pll.qip
 set_global_assignment -name SDC_FILE Top.sdc
