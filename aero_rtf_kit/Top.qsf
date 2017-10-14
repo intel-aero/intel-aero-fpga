@@ -91,11 +91,22 @@ set_location_assignment PIN_E9 -to IO_REC_Tx
 set_location_assignment PIN_P6 -to FC1_IO3_REC_Rx
 set_location_assignment PIN_M7 -to FC1_XBEE_CTS_REC_Tx
 
-## AEROFC <-> TELEMETRY
-set_location_assignment PIN_L5 -to IO_TELEM_Tx
-set_location_assignment PIN_L4 -to IO_TELEM_Rx
-set_location_assignment PIN_L7 -to FC1_TELEM_Tx
-set_location_assignment PIN_L6 -to FC1_TELEM_Rx
+## AEROFC <-> TELEMETRY UART or I2C
+set_location_assignment PIN_L5 -to IO_TELEM_UART_TX
+set_location_assignment PIN_L4 -to IO_TELEM_UART_RX
+set_location_assignment PIN_N1 -to IO_TELEM_I2C_CLK
+set_location_assignment PIN_P2 -to IO_TELEM_I2C_SDA
+set_location_assignment PIN_L7 -to FC1_TELEM_UART_TX_I2C_CLK
+set_location_assignment PIN_L6 -to FC1_TELEM_UART_RX_I2C_SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_UART_TX
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_UART_RX
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_I2C_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_I2C_SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_UART_TX_I2C_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_UART_RX_I2C_SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IO_TELEM_I2C_SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_TELEM_UART_TX_I2C_CLK
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_TELEM_UART_RX_I2C_SDA
 
 ## Booloader force pin
 set_location_assignment PIN_R5 -to BOOTLOADER_FORCE_PIN
@@ -142,8 +153,6 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_GPS_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_IO3_REC_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_MOTORS_SCL_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_MOTORS_SDA_Rx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_Rx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_CTS_REC_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_Tx
@@ -153,8 +162,5 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_MOTORS_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_MOTORS_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_REC_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_REC_Tx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_Rx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_Tx
-
 
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
