@@ -115,8 +115,11 @@ wire [7 : 0] uart_inverted;
 wire [7 : 0] telemetry_con_sel;
 
 // Telemetry UART
-assign FC1_TELEM_UART_RX_I2C_SDA = telemetry_con_sel[0] ? 1'bz : IO_TELEM_UART_RX;
-assign IO_TELEM_UART_TX = telemetry_con_sel[0] ? 0 : FC1_TELEM_UART_TX_I2C_CLK;
+wire io_telem_uart_rx_internal = uart_inverted[1] ? !IO_TELEM_UART_RX : IO_TELEM_UART_RX;
+wire fc1_telem_uart_tx_internal = uart_inverted[1] ? !FC1_TELEM_UART_TX_I2C_CLK : FC1_TELEM_UART_TX_I2C_CLK;
+
+assign FC1_TELEM_UART_RX_I2C_SDA = telemetry_con_sel[0] ? 1'bz : io_telem_uart_rx_internal;
+assign IO_TELEM_UART_TX = telemetry_con_sel[0] ? 0 : fc1_telem_uart_tx_internal;
 
 assign fc1_telem_i2c_clk_internal = telemetry_con_sel[0] ? FC1_TELEM_UART_TX_I2C_CLK : 1'd1;
 
@@ -145,8 +148,8 @@ assign FC1_MOTORS_SDA_Rx = IO_MOTORS_Rx;
 assign IO_MOTORS_Tx = FC1_MOTORS_SCL_Tx;
 assign IO_GPS_Tx = FC1_GPS_Tx;
 assign FC1_GPS_Rx = IO_GPS_Rx;
-assign IO_REC_Tx = FC1_XBEE_CTS_REC_Tx;
-assign FC1_IO3_REC_Rx = IO_REC_Rx;
+assign IO_REC_Tx = uart_inverted[0] ? !FC1_XBEE_CTS_REC_Tx : FC1_XBEE_CTS_REC_Tx;
+assign FC1_IO3_REC_Rx = uart_inverted[0] ? !IO_REC_Rx : IO_REC_Rx;
 assign CHT_DBG_UART_Rx = FC1_XBEE_Tx;
 assign FC1_XBEE_Rx = CHT_DBG_UART_Tx;
 
