@@ -3,18 +3,25 @@
  * | Reg    | Name                  | Mode  | Description                           |
  * |--------------------------------------------------------------------------------|
  * | 0x00   | adc_config_reg        | RW    | bit0 controls if ADC is on or off     |
- * | 0x02   | ADC channel 0 low     | RO    | ADC channel 0 low byte value          |
- * | 0x03   | ADC channel 0 high    | RO    | ADC channel 0 high byte value         |
- * | 0x04   | ADC channel 1 low     | RO    | ADC channel 1 low byte value          |
- * | 0x05   | ADC channel 1 high    | RO    | ADC channel 1 high byte value         |
- * | 0x06   | ADC channel 2 low     | RO    | ADC channel 2 low byte value          |
- * | 0x07   | ADC channel 2 high    | RO    | ADC channel 2 high byte value         |
- * | 0x08   | ADC channel 3 low     | RO    | ADC channel 3 low byte value          |
- * | 0x09   | ADC channel 3 high    | RO    | ADC channel 3 high byte value         |
- * | 0x0A   | ADC channel 4 low     | RO    | ADC channel 4 low byte value          |
- * | 0x0B   | ADC channel 4 high    | RO    | ADC channel 4 high byte value         |
+ * | 0x03   | ADC channel 0 low     | RO    | ADC channel 0 low byte value          |
+ * | 0x04   | ADC channel 0 high    | RO    | ADC channel 0 high byte value         |
+ * | 0x05   | ADC channel 1 low     | RO    | ADC channel 1 low byte value          |
+ * | 0x06   | ADC channel 1 high    | RO    | ADC channel 1 high byte value         |
+ * | 0x07   | ADC channel 2 low     | RO    | ADC channel 2 low byte value          |
+ * | 0x08   | ADC channel 2 high    | RO    | ADC channel 2 high byte value         |
+ * | 0x09   | ADC channel 3 low     | RO    | ADC channel 3 low byte value          |
+ * | 0x0A   | ADC channel 3 high    | RO    | ADC channel 3 high byte value         |
+ * | 0x0B   | ADC channel 4 low     | RO    | ADC channel 4 low byte value          |
+ * | 0x0C   | ADC channel 4 high    | RO    | ADC channel 4 high byte value         |
  * ----------------------------------------------------------------------------------
+ *
+ * Channel 0: ADC1_IN3
+ * Channel 1: ADC1_IN6
+ * Channel 2: ADC1_IN1
+ * Channel 3: ADC1_IN2
+ * Channel 4: ADC1_IN4
  */
+
 module adc_state_machine(
     clk_core,
     clk_adc,
@@ -35,7 +42,6 @@ inout wire i2c_sda;
 input wire reset_n;
 input wire locked;
 
-// ADC
 wire adc_response_valid;
 
 wire [11:0] adc_response_data;
@@ -79,11 +85,11 @@ adc adc_inst(
 always @(posedge clk_core) begin
     if (adc_response_valid) begin
         case (adc_response_channel)
-            5'h01: adc_ch0_raw_data <= adc_response_data;
-            5'h02: adc_ch1_raw_data <= adc_response_data;
-            5'h03: adc_ch2_raw_data <= adc_response_data;
-            5'h04: adc_ch3_raw_data <= adc_response_data;
-            5'h06: adc_ch4_raw_data <= adc_response_data;
+            5'h03: adc_ch0_raw_data <= adc_response_data;
+            5'h06: adc_ch1_raw_data <= adc_response_data;
+            5'h01: adc_ch2_raw_data <= adc_response_data;
+            5'h02: adc_ch3_raw_data <= adc_response_data;
+            5'h04: adc_ch4_raw_data <= adc_response_data;
         endcase
     end
 
@@ -153,25 +159,25 @@ always @(posedge clk_core) begin
                 case (i2c_slave_reg)
                 8'd0:
                     slave_tx_buffer <= adc_config_reg;
-                8'd2:
-                    slave_tx_buffer <= reg_ch0_lower;
                 8'd3:
-                    slave_tx_buffer <= reg_ch0_upper;
+                    slave_tx_buffer <= reg_ch0_lower;
                 8'd4:
-                    slave_tx_buffer <= reg_ch1_lower;
+                    slave_tx_buffer <= reg_ch0_upper;
                 8'd5:
-                    slave_tx_buffer <= reg_ch1_upper;
+                    slave_tx_buffer <= reg_ch1_lower;
                 8'd6:
-                    slave_tx_buffer <= reg_ch2_lower;
+                    slave_tx_buffer <= reg_ch1_upper;
                 8'd7:
-                    slave_tx_buffer <= reg_ch2_upper;
+                    slave_tx_buffer <= reg_ch2_lower;
                 8'd8:
-                    slave_tx_buffer <= reg_ch3_lower;
+                    slave_tx_buffer <= reg_ch2_upper;
                 8'd9:
-                    slave_tx_buffer <= reg_ch3_upper;
+                    slave_tx_buffer <= reg_ch3_lower;
                 8'd10:
-                    slave_tx_buffer <= reg_ch4_lower;
+                    slave_tx_buffer <= reg_ch3_upper;
                 8'd11:
+                    slave_tx_buffer <= reg_ch4_lower;
+                8'd12:
                     slave_tx_buffer <= reg_ch4_upper;
                 default:
                     slave_tx_buffer <= 8'd0;
