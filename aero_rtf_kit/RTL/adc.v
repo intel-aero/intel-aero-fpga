@@ -65,6 +65,8 @@ reg adc_sequencer_csr_write = 1'd0;
 reg [31:0] adc_sequencer_csr_readdata = 32'd0;
 reg [31:0] adc_sequencer_csr_writedata = 32'd0;
 
+reg samples_ready = 1'd0;
+
 adc adc_inst(
     .adc_adc_pll_clock_clk(clk_adc),                               // adc_adc_pll_clock.clk
     .adc_adc_pll_locked_export(locked),                            // adc_adc_pll_locked.export
@@ -85,22 +87,36 @@ adc adc_inst(
 always @(posedge clk_core) begin
     if (adc_response_valid) begin
         case (adc_response_channel)
-            5'h03: adc_ch0_raw_data <= adc_response_data;
-            5'h06: adc_ch1_raw_data <= adc_response_data;
-            5'h01: adc_ch2_raw_data <= adc_response_data;
-            5'h02: adc_ch3_raw_data <= adc_response_data;
-            5'h04: adc_ch4_raw_data <= adc_response_data;
+        5'h03: adc_ch0_raw_data <= adc_response_data;
+        5'h06: adc_ch1_raw_data <= adc_response_data;
+        5'h01: adc_ch2_raw_data <= adc_response_data;
+        5'h02: adc_ch3_raw_data <= adc_response_data;
+        5'h04: adc_ch4_raw_data <= adc_response_data;
         endcase
+        samples_ready <= adc_response_endofpacket;
     end
 
-    // When all channels were read, copy it to the regs that I2C reads
-    // this way all ADC channels read will be syncronized
-    if (adc_response_endofpacket) begin
-        { reg_ch0_upper, reg_ch0_lower } <= { 4'b0, adc_ch0_raw_data[11:0] };
-        { reg_ch1_upper, reg_ch1_lower } <= { 4'b0, adc_ch1_raw_data[11:0] };
-        { reg_ch2_upper, reg_ch2_lower } <= { 4'b0, adc_ch2_raw_data[11:0] };
-        { reg_ch3_upper, reg_ch3_lower } <= { 4'b0, adc_ch3_raw_data[11:0] };
-        { reg_ch4_upper, reg_ch4_lower } <= { 4'b0, adc_ch4_raw_data[11:0] };
+    /*
+     * The last adc_response_channel and adc_response_endofpacket are set
+     * in the same posedge, so a copying adc_chX_raw_data to reg_chx_upper
+     * would result in copying the old value.
+     * So setting samples_ready to adc_response_endofpacket above would
+     * cause the samples_ready == 1 in the next posedge when all the
+     * adc_chX_raw_data are syncronized.
+     */
+    if (samples_ready) begin
+        /*
+         * Only update the registers that I2C reads when slave is not asserted,
+         * this avoids a non-syncronized read between lower and upper bytes.
+         */
+        if (!slave_asserted) begin
+            { reg_ch0_upper, reg_ch0_lower } <= { 4'b0, adc_ch0_raw_data[11:0] };
+            { reg_ch1_upper, reg_ch1_lower } <= { 4'b0, adc_ch1_raw_data[11:0] };
+            { reg_ch2_upper, reg_ch2_lower } <= { 4'b0, adc_ch2_raw_data[11:0] };
+            { reg_ch3_upper, reg_ch3_lower } <= { 4'b0, adc_ch3_raw_data[11:0] };
+            { reg_ch4_upper, reg_ch4_lower } <= { 4'b0, adc_ch4_raw_data[11:0] };
+            samples_ready <= 1'd0;
+        end
     end
 end
 
