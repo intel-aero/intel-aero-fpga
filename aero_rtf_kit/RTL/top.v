@@ -69,7 +69,7 @@ module Top (
         BOOTLOADER_FORCE_PIN
 );
 
-parameter fpga_ver = 8'hC1;
+parameter fpga_ver = 8'hC2;
 
 // global
 input wire in_CLK;
