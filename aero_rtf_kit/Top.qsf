@@ -58,6 +58,7 @@ set_global_assignment -name VERILOG_FILE RTL/i2c_slave.v
 set_global_assignment -name VERILOG_FILE RTL/adc.v
 set_global_assignment -name QIP_FILE adc/synthesis/adc.qip
 set_global_assignment -name QIP_FILE pll/pll.qip
+set_global_assignment -name SDC_FILE Top.sdc
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
