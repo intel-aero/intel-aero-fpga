@@ -126,7 +126,7 @@ always @(posedge clk) begin
                 slave_tx_request <= 1'd1;
             end
             state_slave_asserted_in_master_read_mode: begin
-                sda_write <= slave_tx_buffer[count];
+                sda_write <= (slave_tx_buffer[count] ? 1'bz : 1'd0);
                 count <= count + 3'd1;
                 // last data?
                 if (count == 3'd7) begin
