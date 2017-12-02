@@ -164,21 +164,21 @@ always @(posedge in_CLK) begin
 end
 
 // I2C in telemetry connector
-i2c_bridge i2c_telemetry_connector_bridge_inst(
-    .CLK(clk_core),
-    .MSDA(FC1_I2C_SDA),
-    .MSCL(FC1_I2C_CLK),
-    .SSDA(IO_TELEM_I2C_SDA),
-    .SSCL(IO_TELEM_I2C_CLK)
+i2c_bridge_new i2c_telemetry_connector_bridge_inst(
+    .clk(clk_core),
+    .master_sda(FC1_I2C_SDA),
+    .master_clk(FC1_I2C_CLK),
+    .slave_sda(IO_TELEM_I2C_SDA),
+    .slave_clk(IO_TELEM_I2C_CLK)
 );
 
 // I2C bridge external compass
-i2c_bridge i2c_external_compass_bridge_inst(
-    .CLK(clk_core),
-    .MSDA(FC1_COMPASS_SDA),
-    .MSCL(FC1_COMPASS_CLK),
-    .SSDA(IO_COMPASS_SDA),
-    .SSCL(IO_COMPASS_CLK)
+i2c_bridge_new i2c_external_compass_bridge_inst(
+    .clk(clk_core),
+    .master_sda(FC1_COMPASS_SDA),
+    .master_clk(FC1_COMPASS_CLK),
+    .slave_sda(IO_COMPASS_SDA),
+    .slave_clk(IO_COMPASS_CLK)
 );
 
 // ADC

@@ -53,11 +53,12 @@ set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
 set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
 set_global_assignment -name VERILOG_FILE RTL/top.v
 set_global_assignment -name VERILOG_FILE RTL/spi_slave.v
-set_global_assignment -name VERILOG_FILE RTL/i2c_bridge.v
+set_global_assignment -name VERILOG_FILE RTL/i2c_bridge_new.v
 set_global_assignment -name VERILOG_FILE RTL/i2c_slave.v
 set_global_assignment -name VERILOG_FILE RTL/adc.v
 set_global_assignment -name QIP_FILE adc/synthesis/adc.qip
 set_global_assignment -name QIP_FILE pll/pll.qip
+set_global_assignment -name SDC_FILE Top.sdc
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
