@@ -69,7 +69,7 @@ module Top (
         SDIO_CD
 );
 
-parameter fpga_ver = 8'hC2;
+parameter fpga_ver = 8'hC3;
 
 // global
 input wire in_CLK;
