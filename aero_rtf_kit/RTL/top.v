@@ -16,13 +16,9 @@ module Top (
         // global
         in_CLK,
 
-        // Shared I2C(ADC and external)
+        // Shared I2C(external compass and ADC)
         FC1_I2C_CLK,
         FC1_I2C_SDA,
-
-        // I2C external compass
-        FC1_COMPASS_CLK,
-        FC1_COMPASS_SDA,
         IO_COMPASS_CLK,
         IO_COMPASS_SDA,
 
@@ -50,11 +46,13 @@ module Top (
         CHT_DBG_UART_Tx,
         CHT_DBG_UART_Rx,
 
-        // UART telemetry
-        IO_TELEM_Tx,
-        IO_TELEM_Rx,
-        FC1_TELEM_Tx,
-        FC1_TELEM_Rx,
+        // Telemetry UART or I2C
+        IO_TELEM_UART_TX,
+        IO_TELEM_UART_RX,
+        IO_TELEM_I2C_CLK,
+        IO_TELEM_I2C_SDA,
+        FC1_TELEM_UART_TX_I2C_CLK,
+        FC1_TELEM_UART_RX_I2C_SDA,
 
         // SPI CHT
         SPI_SCLK,
@@ -62,14 +60,16 @@ module Top (
         SPI_MOSI,
         SPI_SS,
 
-        // Telemetry I2C
-        IO_TELEM_I2C_CLK,
-        IO_TELEM_I2C_SDA,
+        BOOTLOADER_FORCE_PIN,
 
-        BOOTLOADER_FORCE_PIN
+        // SDCARD FC
+        SDIO_CK,
+        SDIO_D0,
+        SDIO_CMD,
+        SDIO_CD
 );
 
-parameter fpga_ver = 8'hC2;
+parameter fpga_ver = 8'hC3;
 
 // global
 input wire in_CLK;
@@ -81,8 +81,6 @@ inout wire FC1_I2C_SDA;
 // External compass I2C
 output wire IO_COMPASS_CLK;
 inout wire IO_COMPASS_SDA;
-input wire FC1_COMPASS_CLK;
-inout wire FC1_COMPASS_SDA;
 
 output wire IO_MOTORS_Tx;
 input  wire IO_MOTORS_Rx;
@@ -104,31 +102,56 @@ output wire FC1_XBEE_Rx;
 input  wire CHT_DBG_UART_Tx;
 output wire CHT_DBG_UART_Rx;
 
-output wire IO_TELEM_Tx;
-input  wire IO_TELEM_Rx;
-input  wire FC1_TELEM_Tx;
-output wire FC1_TELEM_Rx;
+// Telemetry UART or I2C
+output wire IO_TELEM_UART_TX;
+input wire IO_TELEM_UART_RX;
+output wire IO_TELEM_I2C_CLK;
+inout wire IO_TELEM_I2C_SDA;
+input wire FC1_TELEM_UART_TX_I2C_CLK;
+inout wire FC1_TELEM_UART_RX_I2C_SDA;
+
+// FC configurations
+wire [7 : 0] uart_inverted;
+wire [7 : 0] telemetry_con_sel;
+
+// Telemetry UART
+wire io_telem_uart_rx_internal = uart_inverted[1] ? !IO_TELEM_UART_RX : IO_TELEM_UART_RX;
+wire fc1_telem_uart_tx_internal = uart_inverted[1] ? !FC1_TELEM_UART_TX_I2C_CLK : FC1_TELEM_UART_TX_I2C_CLK;
+
+assign FC1_TELEM_UART_RX_I2C_SDA = telemetry_con_sel[0] ? 1'bz : io_telem_uart_rx_internal;
+assign IO_TELEM_UART_TX = telemetry_con_sel[0] ? 0 : fc1_telem_uart_tx_internal;
+
+assign fc1_telem_i2c_clk_internal = telemetry_con_sel[0] ? FC1_TELEM_UART_TX_I2C_CLK : 1'd1;
+
+// Telemetry I2C bridge
+i2c_bridge_new i2c_telemetry_connector_bridge_inst(
+    .clk(clk_core),
+    .master_sda(FC1_TELEM_UART_RX_I2C_SDA),
+    .master_clk(fc1_telem_i2c_clk_internal),
+    .slave_sda(IO_TELEM_I2C_SDA),
+    .slave_clk(IO_TELEM_I2C_CLK)
+);
 
 input wire SPI_SCLK;
 output wire SPI_MISO;
 input wire SPI_MOSI;
 input wire SPI_SS;
 
-output wire IO_TELEM_I2C_CLK;
-inout wire IO_TELEM_I2C_SDA;
-
 output reg BOOTLOADER_FORCE_PIN = 0;
+
+output wire SDIO_CK = 1'bz;
+output wire SDIO_D0 = 1'bz;
+output wire SDIO_CMD = 1'bz;
+output wire SDIO_CD = 1'bz;
 
 assign FC1_MOTORS_SDA_Rx = IO_MOTORS_Rx;
 assign IO_MOTORS_Tx = FC1_MOTORS_SCL_Tx;
 assign IO_GPS_Tx = FC1_GPS_Tx;
 assign FC1_GPS_Rx = IO_GPS_Rx;
-assign IO_REC_Tx = FC1_XBEE_CTS_REC_Tx;
-assign FC1_IO3_REC_Rx = IO_REC_Rx;
+assign IO_REC_Tx = uart_inverted[0] ? !FC1_XBEE_CTS_REC_Tx : FC1_XBEE_CTS_REC_Tx;
+assign FC1_IO3_REC_Rx = uart_inverted[0] ? !IO_REC_Rx : IO_REC_Rx;
 assign CHT_DBG_UART_Rx = FC1_XBEE_Tx;
 assign FC1_XBEE_Rx = CHT_DBG_UART_Tx;
-assign FC1_TELEM_Rx = IO_TELEM_Rx;
-assign IO_TELEM_Tx = FC1_TELEM_Tx;
 
 //--------------------------
 // Regs and Wires
@@ -163,20 +186,11 @@ always @(posedge in_CLK) begin
     end
 end
 
-// I2C in telemetry connector
-i2c_bridge_new i2c_telemetry_connector_bridge_inst(
-    .clk(clk_core),
-    .master_sda(FC1_I2C_SDA),
-    .master_clk(FC1_I2C_CLK),
-    .slave_sda(IO_TELEM_I2C_SDA),
-    .slave_clk(IO_TELEM_I2C_CLK)
-);
-
 // I2C bridge external compass
 i2c_bridge_new i2c_external_compass_bridge_inst(
     .clk(clk_core),
-    .master_sda(FC1_COMPASS_SDA),
-    .master_clk(FC1_COMPASS_CLK),
+    .master_sda(FC1_I2C_SDA),
+    .master_clk(FC1_I2C_CLK),
     .slave_sda(IO_COMPASS_SDA),
     .slave_clk(IO_COMPASS_CLK)
 );
@@ -189,6 +203,15 @@ adc_state_machine adc_inst(
     .i2c_sda(FC1_I2C_SDA),
     .reset_n(reset_n),
     .locked(locked)
+);
+
+fc_config fc_config_inst(
+    .clk_core(clk_core),
+    .i2c_clk(FC1_I2C_CLK),
+    .i2c_sda(FC1_I2C_SDA),
+    .fpga_firmware_version(fpga_ver),
+    .uart_inverted(uart_inverted),
+    .telemetry_con_sel(telemetry_con_sel)
 );
 
 // SPI

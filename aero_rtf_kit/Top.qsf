@@ -56,6 +56,7 @@ set_global_assignment -name VERILOG_FILE RTL/spi_slave.v
 set_global_assignment -name VERILOG_FILE RTL/i2c_bridge_new.v
 set_global_assignment -name VERILOG_FILE RTL/i2c_slave.v
 set_global_assignment -name VERILOG_FILE RTL/adc.v
+set_global_assignment -name VERILOG_FILE RTL/fc_config.v
 set_global_assignment -name QIP_FILE adc/synthesis/adc.qip
 set_global_assignment -name QIP_FILE pll/pll.qip
 set_global_assignment -name SDC_FILE Top.sdc
@@ -90,34 +91,34 @@ set_location_assignment PIN_E9 -to IO_REC_Tx
 set_location_assignment PIN_P6 -to FC1_IO3_REC_Rx
 set_location_assignment PIN_M7 -to FC1_XBEE_CTS_REC_Tx
 
-## AEROFC <-> TELEMETRY
-set_location_assignment PIN_L5 -to IO_TELEM_Tx
-set_location_assignment PIN_L4 -to IO_TELEM_Rx
-set_location_assignment PIN_M5 -to FC1_TELEM_Tx
-set_location_assignment PIN_P3 -to FC1_TELEM_Rx
+## AEROFC <-> TELEMETRY UART or I2C
+set_location_assignment PIN_L5 -to IO_TELEM_UART_TX
+set_location_assignment PIN_L4 -to IO_TELEM_UART_RX
+set_location_assignment PIN_N1 -to IO_TELEM_I2C_CLK
+set_location_assignment PIN_P2 -to IO_TELEM_I2C_SDA
+set_location_assignment PIN_L7 -to FC1_TELEM_UART_TX_I2C_CLK
+set_location_assignment PIN_L6 -to FC1_TELEM_UART_RX_I2C_SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_UART_TX
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_UART_RX
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_I2C_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_I2C_SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_UART_TX_I2C_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_UART_RX_I2C_SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IO_TELEM_I2C_SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_TELEM_UART_TX_I2C_CLK
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_TELEM_UART_RX_I2C_SDA
 
 ## Booloader force pin
 set_location_assignment PIN_R5 -to BOOTLOADER_FORCE_PIN
 
-## Shared I2C
-set_location_assignment PIN_L7 -to FC1_I2C_CLK
-set_location_assignment PIN_L6 -to FC1_I2C_SDA
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_I2C_SDA
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_I2C_CLK
-
-# External compass I2C
-set_location_assignment PIN_P9 -to FC1_COMPASS_CLK
-set_location_assignment PIN_P7 -to FC1_COMPASS_SDA
+# Shared I2C(compass and ADC)
+set_location_assignment PIN_P9 -to FC1_I2C_CLK
+set_location_assignment PIN_P7 -to FC1_I2C_SDA
 set_location_assignment PIN_D12 -to IO_COMPASS_CLK
 set_location_assignment PIN_A14 -to IO_COMPASS_SDA
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_COMPASS_CLK
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_COMPASS_SDA
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_I2C_CLK
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to FC1_I2C_SDA
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IO_COMPASS_SDA
-
-## Telemetry I2C
-set_location_assignment PIN_N1 -to IO_TELEM_I2C_CLK
-set_location_assignment PIN_P2 -to IO_TELEM_I2C_SDA
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IO_TELEM_I2C_SDA
 
 ## SPI pins
 set_location_assignment PIN_H12 -to SPI_SCLK
@@ -128,6 +129,16 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_SCLK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_MOSI
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_MISO
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_SS
+
+## AEROFC SDIO
+set_location_assignment PIN_M5 -to SDIO_CK
+set_location_assignment PIN_M4 -to SDIO_D0
+set_location_assignment PIN_P3 -to SDIO_CMD
+set_location_assignment PIN_R3 -to SDIO_CD
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_CK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_D0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_CMD
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDIO_CD
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to BOOTLOADER_FORCE_PIN
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to in_CLK
@@ -142,8 +153,6 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_GPS_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_IO3_REC_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_MOTORS_SCL_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_MOTORS_SDA_Rx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_Rx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_TELEM_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_CTS_REC_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_XBEE_Tx
@@ -153,12 +162,5 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_MOTORS_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_MOTORS_Tx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_REC_Rx
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_REC_Tx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_Rx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_Tx
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_I2C_CLK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to IO_TELEM_I2C_SDA
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_COMPASS_CLK
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FC1_COMPASS_SDA
-
 
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
