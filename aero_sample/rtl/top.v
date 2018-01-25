@@ -41,9 +41,30 @@ module top (
 	output  i2c_scl,
 	
 	// PWM
-	output [11:0] pwmout
+	output [11:0] pwmout,
+	
+	// PPM_convertor
+	input raw_clock, PPM_input
 
 );
+
+
+
+ // PPM_convertor top
+
+wire [15:0] data_PPM;
+wire [3:0] num_canal; 
+wire pulse_syncro;
+reg ecriture_data_PPM;
+ 
+PPM_convertor PPM_convertor_inst(
+
+.raw_clock(raw_clock),
+.PPM_input(PPM_input),
+.data_output(data_PPM), 
+.canal_output(num_canal),
+.pulse_syncro(pulse_syncro));
+
 
 
 parameter UART_TX = 8'h04;
@@ -238,9 +259,9 @@ wire uart_rx_dat_rdy;
 
 parameter fpga_ver_l = 8'h00;
 parameter fpga_ver_h = 8'hA1;
-parameter regBank_size = 73;  //62 // 74-12 = 62
-
-
+//parameter regBank_size = 73;  //62 // 74-12 = 62
+parameter regBank_size = 105; // 73 + 32 pour le data PPM;
+////////////////////////////////////////////////////////////////////////// MODIF
 reg [7:0]regBank[0:regBank_size];
 
 
@@ -412,7 +433,7 @@ end
 always @(posedge clk_core)
    i2c_busy_r <= i2c_busy;
 	  
-always @(posedge clk_core or negedge reset_n)begin
+always @(posedge clk_core or negedge reset_n )begin
    if(~reset_n) begin
       i2c_tx_on <= 1'b0;
       uart_tx_on <= 1'b0;
@@ -452,8 +473,24 @@ always @(posedge clk_core or negedge reset_n)begin
 			{regBank[9], regBank[8]} <= {4'b0, adc_ch3_raw_data[11:0]}; 
 			{regBank[11], regBank[10]} <= {4'b0, adc_ch4_raw_data[11:0]}; 
 	end
+	else if (ecriture_data_PPM == 1) begin
+	integer tmp_num_canal;
+		tmp_num_canal = 2*num_canal + 74;	// 0 à 15
+		{regBank[tmp_num_canal], regBank[tmp_num_canal+1]} <= data_PPM;
+	end
+end
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////// MODIF
+
+
+
+always @(negedge pulse_syncro) begin
+	ecriture_data_PPM <= 1;
+	#100000 ecriture_data_PPM <= 0;
 	
 end
+
+
 
 
 always @(posedge clk_core or negedge reset_n) begin
@@ -481,6 +518,13 @@ always @(posedge clk_core or negedge reset_n) begin
    else if(uart_rx_dat_rdy)
      uart_rx_on <= 1'b1;
 end
+
+
+
+
+
+
+
 
 wire pwm0_on = regBank[21][0];
 wire pwm1_on = regBank[21][1];
